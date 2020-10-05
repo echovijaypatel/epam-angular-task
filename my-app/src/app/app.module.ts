@@ -7,8 +7,10 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { LogoComponent } from './logo/logo.component';
-import { CoursesComponent } from './courses/courses.component';
-import { CourseItemComponent } from './courses/course-item/course-item.component';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { CourseListComponent } from './course-list/course-list.component';
+import { ErrorComponent } from './error/error.component';
+import { CourseItemComponent } from './course-list/course-item/course-item.component';
 
 @NgModule({
   declarations: [
@@ -17,8 +19,10 @@ import { CourseItemComponent } from './courses/course-item/course-item.component
     FooterComponent,
     LoginComponent,
     LogoComponent,
-    CoursesComponent,
-    CourseItemComponent
+    CourseItemComponent,
+    BreadcrumbsComponent,
+    CourseListComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
