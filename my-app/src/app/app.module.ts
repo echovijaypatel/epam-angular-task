@@ -7,7 +7,6 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { LogoComponent } from './logo/logo.component';
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { CourseListComponent } from './course-list/course-list.component';
 import { ErrorComponent } from './error/error.component';
 import { CourseItemComponent } from './course-list/course-item/course-item.component';
@@ -24,7 +23,6 @@ import { AuthGuardService } from './services/auth-guard.service';
     LoginComponent,
     LogoComponent,
     CourseItemComponent,
-    BreadcrumbsComponent,
     CourseListComponent,
     ErrorComponent,
     CourseListItemComponent,
