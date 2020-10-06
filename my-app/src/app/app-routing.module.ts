@@ -3,10 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { CourseListComponent } from './course-list/course-list.component';
 import { ErrorComponent } from './error/error.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'courses', component: CourseListComponent },
+  {
+    path: 'courses',
+    component: CourseListComponent,
+    canActivate: [AuthGuardService],
+  },
   { path: '', component: LoginComponent, pathMatch: 'full' },
   { path: '**', component: ErrorComponent },
 ];

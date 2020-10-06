@@ -1,29 +1,57 @@
 <app-header></app-header>
-<div class="loginWrapper">
-  <div class="loginTitle">Login</div>
+<form (ngSubmit)="onLogin()" #loginForm="ngForm">
   <div class="loginBody">
-    <div class="loginSection">
-      <div class="loginItem">Email:</div>
-      <div class="errorItem floatRight">Error</div>
+    <div class="loginSection loginTitle">
+      <div class="loginItem">Login</div>
+      <div
+        class="errorItem floatRight"
+        [hidden]="loginForm.valid || loginForm.pristine"
+      >
+        Wrong e-mail or password.
+      </div>
     </div>
     <div class="loginSection">
-      <input class="inputItem" type="text" placeholder="Enter e-mail" />
+      <div class="loginItem">Email:</div>
+      <div class="errorItem floatRight">*Required</div>
+    </div>
+    <div class="loginSection">
+      <input
+        class="inputItem"
+        type="text"
+        placeholder="Enter e-mail"
+        [(ngModel)]="username"
+        name="username"
+        required
+        email
+      />
     </div>
     <div class="loginSection">
       <div class="loginItem">Password:</div>
-      <div class="errorItem floatRight">Error</div>
+      <div class="errorItem floatRight">*Required</div>
     </div>
     <div class="loginSection">
-      <input class="inputItem" type="password" placeholder="Enter password" />
+      <input
+        class="inputItem"
+        type="password"
+        placeholder="Enter password"
+        [(ngModel)]="password"
+        name="password"
+        required
+      />
     </div>
     <div class="loginSection loginButtonWrapper">
       <div class="forgetPassword">
         <a href="#"> Forget Password? </a>
       </div>
       <div class="floatRight">
-        <input type="submit" value="Login" />
+        <input
+          type="submit"
+          class="btn btn-success loginbtn"
+          value="Login"
+          [disabled]="loginForm.touched && !loginForm.valid"
+        />
       </div>
     </div>
   </div>
-</div>
+</form>
 <app-footer></app-footer>

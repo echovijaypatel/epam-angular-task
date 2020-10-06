@@ -11,6 +11,10 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { CourseListComponent } from './course-list/course-list.component';
 import { ErrorComponent } from './error/error.component';
 import { CourseItemComponent } from './course-list/course-item/course-item.component';
+import { CourseListItemComponent } from './course-list/course-list-item/course-list-item.component';
+import { FormsModule } from '@angular/forms';
+import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
+import { AuthGuardService } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -22,13 +26,16 @@ import { CourseItemComponent } from './course-list/course-item/course-item.compo
     CourseItemComponent,
     BreadcrumbsComponent,
     CourseListComponent,
-    ErrorComponent
+    ErrorComponent,
+    CourseListItemComponent,
   ],
   imports: [
+    FormsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxBootstrapIconsModule.pick(allIcons),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [AuthGuardService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

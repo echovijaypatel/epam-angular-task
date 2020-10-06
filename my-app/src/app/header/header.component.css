@@ -1,16 +1,8 @@
-.oval {
-	box-sizing: border-box;
-	border-color: #979797;
-	border-width: 2px;
-	border-style: solid;
-	height: 28px;
-	width: 28px;
+.userDetails{
+  color: white;
+  display: flex;
+  margin-right: 60px;
 }
-.triangle {
-	background-image: linear-gradient(141deg, #0079AD 11%, #B4D084 100%);
-	transform: rotate(-270deg);
-	border-radius: 1px;
-	background-color: #D8D8D8;
-	height: 12px;
-	width: 16px;
-}
+.userDetails div i-bs{margin-right: 5px;margin-left: 5px;}
+.userDetails .logout{margin-left: 20px;}
+.logoutbtn{cursor: pointer;}

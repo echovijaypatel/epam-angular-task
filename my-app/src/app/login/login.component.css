@@ -1,4 +1,4 @@
-.loginWrapper {
+.loginBody {
   width: 400px;
   height: 280px;
   padding: 15px;
@@ -13,22 +13,38 @@
   transform: translate(-50%, -50%);
 }
 .loginTitle {
+  margin-top: 20px !important;
+  margin-bottom: 28px !important;
+}
+.loginTitle .loginItem {
   font-size: 18px;
   font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 28px;
 }
 .loginSection {
   display: block;
   margin-top: 5px;
   margin-bottom: 5px;
 }
-.loginItem{display: inline;font-weight: bold;}
+.loginItem {
+  display: inline;
+  font-weight: bold;
+}
 .floatRight {
   float: right;
 }
-.inputItem{
+.inputItem {
   width: 100%;
 }
-.loginButtonWrapper{margin-top: 25px;}
-.forgetPassword{display: inline;}
+.loginButtonWrapper {
+  margin-top: 25px;
+}
+.forgetPassword {
+  display: inline;
+}
+.loginbtn {
+  height: 28px;
+  width: 63px;
+  line-height: 2px;
+}
+.errorItem{color:red}
+.loginbtn:disabled{background-color:gray}
