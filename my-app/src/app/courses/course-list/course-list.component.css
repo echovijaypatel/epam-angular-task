@@ -1,0 +1,22 @@
+.searchWrapper {
+  margin-top: 25px;
+}
+
+.searchWrapper button {
+  height: 28px;
+  width: 75px;
+  line-height: 14px;
+  margin-top: -4px;
+  margin-left: 9px;
+}
+.addCourseWrapper {
+  margin-top: 25px;
+  text-align: right;
+}
+.addCourseWrapper button {
+  height: 28px;
+  width: 111px;
+  line-height: 14px;
+  margin-top: -4px;
+  margin-left: 9px;
+}
