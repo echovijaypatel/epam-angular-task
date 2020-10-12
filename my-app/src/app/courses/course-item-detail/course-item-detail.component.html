@@ -1,0 +1,96 @@
+<form (ngSubmit)="onSave()" #addNewForm="ngForm">
+  <div class="col-md-12 newCourseWrapper">
+    <div class="newCourse">
+      <div class="title">New Course</div>
+      <div class="itemSectionTitle">
+        <div class="item">Email:</div>
+        <div class="errorItem floatRight">*Required</div>
+      </div>
+      <div class="itemSection">
+        <input
+          class="inputItem"
+          type="text"
+          placeholder="Enter Title"
+          [(ngModel)]="title"
+          name="title"
+          required
+          email
+        />
+      </div>
+      <div class="itemSectionTitle">
+        <div class="item">Description:</div>
+        <div class="errorItem floatRight">*Required</div>
+      </div>
+      <div class="itemSection">
+        <textarea
+          class="inputItem"
+          type="textarea"
+          placeholder="Add description"
+          [(ngModel)]="description"
+          name="description"
+          required
+        ></textarea>
+      </div>
+      <div class="itemSectionTitle">
+        <div class="item">Duration:</div>
+        <div class="errorItem floatRight">*Required</div>
+      </div>
+      <div class="itemSection">
+        <input
+          class="inputItem"
+          type="text"
+          placeholder="Minutes"
+          [(ngModel)]="duration"
+          name="duration"
+          required
+        />
+      </div>
+      <div class="itemSectionTitle">
+        <div class="item">Date:</div>
+        <div class="errorItem floatRight">*Required</div>
+      </div>
+      <div class="itemSection">
+        <input
+          class="inputItem"
+          type="text"
+          placeholder="Date"
+          [(ngModel)]="date"
+          name="date"
+          required
+        />
+      </div>
+      <div class="itemSectionTitle">
+        <div class="item">Authors:</div>
+        <div class="errorItem floatRight">*Required</div>
+      </div>
+      <div class="itemSection">
+        <input
+          class="inputItem"
+          type="text"
+          placeholder="Authors"
+          [(ngModel)]="authors"
+          name="authors"
+          required
+        />
+      </div>
+      <div class="itemSection buttonWrapper">
+        <div class="floatRight">
+          <input
+            type="submit"
+            class="btn btn-primary btnCustom cancel"
+            value="Cancel"
+          />
+          <input
+            type="submit"
+            class="btn btn-success btnCustom"
+            value="Save"
+            [disabled]="addNewForm.touched && !addNewForm.valid"
+          />
+        </div>
+        <div class="itemSection errorMessage">
+          {{ errorMessage }} asdas sad s d
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

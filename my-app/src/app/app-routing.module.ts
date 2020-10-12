@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CourseListItemComponent } from './course-list/course-list-item/course-list-item.component';
-import { CourseListComponent } from './course-list/course-list.component';
+import { CourseItemDetailComponent } from './courses/course-item-detail/course-item-detail.component';
+import { CourseListComponent } from './courses/course-list/course-list.component';
+import { CoursesComponent } from './courses/courses.component';
 import { ErrorComponent } from './error/error.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -12,6 +13,7 @@ const routes: Routes = [
   {
     path: 'courses',
     canActivate: [AuthGuardService],
+    component: CoursesComponent,
     children: [
       {
         path: '',
@@ -19,11 +21,11 @@ const routes: Routes = [
       },
       {
         path: 'new',
-        component: CourseListItemComponent,
+        component: CourseItemDetailComponent,
       },
       {
         path: 'edit/:id',
-        component: CourseListItemComponent,
+        component: CourseItemDetailComponent,
       },
     ],
   },

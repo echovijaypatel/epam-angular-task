@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row" *ngIf="!isAddingNewCourse">
+    <div class="searchWrapper">
+      <input type="text" placeholder="Type to search" />
+      <button class="btn btn-success">Search</button>
+    </div>
+    <div>
+      <button class="btn btn-primary" (click)="addNewCourse()">
+        Add Course
+      </button>
+    </div>
+  </div>
+</div>

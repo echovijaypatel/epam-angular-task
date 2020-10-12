@@ -7,13 +7,14 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { LogoComponent } from './logo/logo.component';
-import { CourseListComponent } from './course-list/course-list.component';
 import { ErrorComponent } from './error/error.component';
-import { CourseItemComponent } from './course-list/course-item/course-item.component';
-import { CourseListItemComponent } from './course-list/course-list-item/course-list-item.component';
 import { FormsModule } from '@angular/forms';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
 import { AuthGuardService } from './services/auth-guard.service';
+import { CoursesComponent } from './courses/courses.component';
+import { CourseListComponent } from './courses/course-list/course-list.component';
+import { CourseItemOverviewComponent } from './courses/course-item-overview/course-item-overview.component';
+import { CourseItemDetailComponent } from './courses/course-item-detail/course-item-detail.component';
 
 @NgModule({
   declarations: [
@@ -22,10 +23,11 @@ import { AuthGuardService } from './services/auth-guard.service';
     FooterComponent,
     LoginComponent,
     LogoComponent,
-    CourseItemComponent,
     CourseListComponent,
     ErrorComponent,
-    CourseListItemComponent,
+    CoursesComponent,
+    CourseItemOverviewComponent,
+    CourseItemDetailComponent,
   ],
   imports: [
     FormsModule,
