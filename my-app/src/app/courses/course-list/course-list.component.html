@@ -11,7 +11,10 @@
   </div>
 </div>
 
-<div *ngFor="let item of courseItemsOverview" class="row coursesOverview">
+<div
+  *ngFor="let item of courseItemsOverview; let i = index"
+  class="row coursesOverview"
+>
   <div class="col-md-8 courseSection">
     <div class="title">{{ item.Title }}</div>
   </div>
@@ -32,13 +35,16 @@
   </div>
   <div class="col-md-4 courseSection displayFlex btnWrapper">
     <div class="edit">
-      <button class="btn btn-primary btnCustom btnedit">
+      <button class="btn btn-primary btnCustom btnedit" (click)="editCourse(i)">
         <i-bs name="pencil-square"></i-bs>
         Edit
       </button>
     </div>
     <div class="delete">
-      <button class="btn btn-primary btnCustom btndelete">
+      <button
+        class="btn btn-primary btnCustom btndelete"
+        (click)="deleteCourse(i)"
+      >
         <i-bs name="archive-fill"></i-bs>
         Delete
       </button>
