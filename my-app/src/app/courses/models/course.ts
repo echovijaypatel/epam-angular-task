@@ -4,7 +4,7 @@ export interface Course {
   Id: number;
   Title: string;
   CreationDate: Date;
-  Duration: string;
+  Duration: number;
   Description: string;
   Authors: User[];
   SelectedAuthors: User[];

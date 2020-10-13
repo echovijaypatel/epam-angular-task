@@ -13,7 +13,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.username = this.authService.getUsername();
-    console.log(this.username);
   }
 
   onLogout() {

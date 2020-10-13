@@ -11,17 +11,14 @@
   </div>
 </div>
 
-<div
-  *ngFor="let item of courseItemsOverview; let i = index"
-  class="row coursesOverview"
->
+<div *ngFor="let item of courseItemsOverview" class="row coursesOverview">
   <div class="col-md-8 courseSection">
     <div class="title">{{ item.Title }}</div>
   </div>
   <div class="col-md-4 courseSection displayFlex durationWrapper">
     <div class="duration">
       <i-bs name="stopwatch"></i-bs>
-      {{ item.Duration }}
+      {{ item.Duration | NumberToMinutes }}
     </div>
     <div class="creationDate">
       <i-bs name="calendar"></i-bs>
@@ -35,7 +32,10 @@
   </div>
   <div class="col-md-4 courseSection displayFlex btnWrapper">
     <div class="edit">
-      <button class="btn btn-primary btnCustom btnedit" (click)="editCourse(i)">
+      <button
+        class="btn btn-primary btnCustom btnedit"
+        (click)="editCourse(item.Id)"
+      >
         <i-bs name="pencil-square"></i-bs>
         Edit
       </button>
@@ -43,11 +43,14 @@
     <div class="delete">
       <button
         class="btn btn-primary btnCustom btndelete"
-        (click)="deleteCourse(i)"
+        (click)="deleteCourse(item.Id)"
       >
         <i-bs name="archive-fill"></i-bs>
         Delete
       </button>
     </div>
   </div>
+</div>
+<div class="loadMore">
+  <a href="#"> Load More</a>
 </div>

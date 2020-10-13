@@ -37,11 +37,12 @@
       <div class="itemSection">
         <input
           class="inputItem normalWidth"
-          type="text"
+          type="number"
           placeholder="Minutes"
           [(ngModel)]="courseDetail.Duration"
           name="courseDetail.Duration"
           required
+          min="10"
         />
       </div>
       <div class="itemSectionTitle inlineWrapper">
@@ -63,19 +64,23 @@
         <div class="errorItem floatRight">*Required</div>
       </div>
       <div class="itemSection">
-        <input
-          class="inputItem"
-          type="text"
-          placeholder="Authors"
+        <ng-multiselect-dropdown
+          [placeholder]="'custom placeholder'"
+          [settings]="dropdownSettings"
+          [data]="courseDetail.Authors"
           [(ngModel)]="courseDetail.SelectedAuthors"
+          (onSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
           name="courseDetail.SelectedAuthors"
           required
-        />
+        >
+        </ng-multiselect-dropdown>
       </div>
       <div class="itemSection buttonWrapper">
         <div class="floatRight">
           <input
-            type="submit"
+            type="button"
+            (click)="onCancel()"
             class="btn btn-primary btnCustom cancel"
             value="Cancel"
           />
@@ -83,7 +88,7 @@
             type="submit"
             class="btn btn-success btnCustom"
             value="Save"
-            [disabled]="addNewForm.touched && !addNewForm.valid"
+            [disabled]="!addNewForm.valid"
           />
         </div>
         <div class="itemSection errorMessage">
