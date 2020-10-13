@@ -3,7 +3,7 @@
     <div class="newCourse">
       <div class="title">New Course</div>
       <div class="itemSectionTitle">
-        <div class="item">Email:</div>
+        <div class="item">Title:</div>
         <div class="errorItem floatRight">*Required</div>
       </div>
       <div class="itemSection">
@@ -14,7 +14,6 @@
           [(ngModel)]="courseDetail.Title"
           name="courseDetail.Title"
           required
-          email
         />
       </div>
       <div class="itemSectionTitle">
@@ -31,13 +30,13 @@
           required
         ></textarea>
       </div>
-      <div class="itemSectionTitle">
-        <div class="item">Duration:</div>
-        <div class="errorItem floatRight">*Required</div>
+      <div class="itemSectionTitle inlineWrapper">
+        <div class="item disInlineTitle">Duration:</div>
+        <div class="errorItem disInline">*Required</div>
       </div>
       <div class="itemSection">
         <input
-          class="inputItem"
+          class="inputItem normalWidth"
           type="text"
           placeholder="Minutes"
           [(ngModel)]="courseDetail.Duration"
@@ -45,14 +44,14 @@
           required
         />
       </div>
-      <div class="itemSectionTitle">
-        <div class="item">Date:</div>
-        <div class="errorItem floatRight">*Required</div>
+      <div class="itemSectionTitle inlineWrapper">
+        <div class="item disInlineTitle">Date:</div>
+        <div class="errorItem disInline">*Required</div>
       </div>
       <div class="itemSection">
         <input
-          class="inputItem"
-          type="text"
+          class="inputItem normalWidth"
+          type="date"
           placeholder="Date"
           [(ngModel)]="courseDetail.CreationDate"
           name="courseDetail.CreationDate"
