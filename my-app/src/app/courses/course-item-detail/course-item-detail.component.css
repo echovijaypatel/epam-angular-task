@@ -37,11 +37,6 @@
 .buttonWrapper {
   margin-top: 25px;
 }
-.btnCustom {
-  height: 28px;
-  width: 75px;
-  line-height: 2px;
-}
 .btnCustom.cancel{margin-right: 5px;}
 .btnCustom:disabled{background-color:gray}
 .inputItem{width: 100%;}

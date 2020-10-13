@@ -1,5 +1,6 @@
 .searchWrapper {
   margin-top: 25px;
+  padding-left: 0;
 }
 
 .searchWrapper button {
@@ -12,11 +13,22 @@
 .addCourseWrapper {
   margin-top: 25px;
   text-align: right;
+  padding-right: 0;
 }
 .addCourseWrapper button {
-  height: 28px;
-  width: 111px;
-  line-height: 14px;
-  margin-top: -4px;
-  margin-left: 9px;
+  width: 135px;
 }
+.coursesOverview{
+  margin-top: 25px;
+  padding: 25px;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 1px 2px 1px 2px #888888;
+}
+.durationWrapper div{margin-right: 25px;}
+.btnWrapper div{margin-right: 25px;}
+.title{font-size: 18px;font-weight: bold;margin-bottom: 10px;}
+.btndelete{width: 100px;}
+.btn-primary {background-color: rgb(48, 158, 185);}
+.btn i-bs{padding-right: 5px;}
+.btnedit{width: 80px;}
