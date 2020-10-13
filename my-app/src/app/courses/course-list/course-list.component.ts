@@ -28,6 +28,8 @@ export class CourseListComponent implements OnInit {
     this.router.navigateByUrl('/courses/edit/' + index);
   }
   deleteCourse(index) {
-    this.courseItemsOverview = this.courseService.deleteCourse(index);
+    if (confirm('Are you sure to delete?')) {
+      this.courseItemsOverview = this.courseService.deleteCourse(index);
+    }
   }
 }
