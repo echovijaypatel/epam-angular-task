@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
-import {BreadcrumbModule} from 'angular-crumbs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,7 +39,6 @@ import { NumberToMinutes } from './services/numbertominutes.pipe';
     AppRoutingModule,
     NgxBootstrapIconsModule.pick(allIcons),
     NgMultiSelectDropDownModule.forRoot(),
-    BreadcrumbModule,
   ],
   providers: [NumberToMinutes, AuthGuardService],
   bootstrap: [AppComponent],

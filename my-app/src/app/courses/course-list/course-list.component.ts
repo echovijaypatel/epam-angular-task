@@ -1,37 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CourseService } from 'src/app/services/course.service';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Course } from '../models/course';
 
 @Component({
   selector: 'app-course-list',
   templateUrl: './course-list.component.html',
   styleUrls: ['./course-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseListComponent implements OnInit {
-  isAddingNewCourse: boolean;
-  courseItemsOverview: Course[];
+  @Input() courseItemsOverview: Course[];
+  @Output() editCourseEvent = new EventEmitter<number>();
+  @Output() deleteCourseEvent = new EventEmitter<number>();
 
-  constructor(private router: Router, private courseService: CourseService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.courseItemsOverview = this.courseService.getCourses();
-    console.log('courseItemsOverview');
-    console.log(this.courseItemsOverview);
+  ngOnInit(): void {}
+
+  editCourse(id) {
+    this.editCourseEvent.emit(id);
   }
 
-  addNewCourse() {
-    this.isAddingNewCourse = true;
-    this.router.navigateByUrl('/courses/new');
-  }
-
-  editCourse(index) {
-    this.isAddingNewCourse = true;
-    this.router.navigateByUrl('/courses/edit/' + index);
-  }
-  deleteCourse(index) {
+  deleteCourse(id) {
     if (confirm('Are you sure to delete?')) {
-      this.courseItemsOverview = this.courseService.deleteCourse(index);
+      this.deleteCourseEvent.emit(id);
     }
   }
 }

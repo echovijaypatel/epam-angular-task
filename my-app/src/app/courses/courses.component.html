@@ -1,23 +1,32 @@
 <app-header></app-header>
-<breadcrumb #parent>
-  <div>
-    <ol class="breadcrumb">
-      <ng-template ngFor let-route [ngForOf]="parent.breadcrumbs">
-        <li *ngIf="!route.terminal" class="breadcrumb-item">
-          <a href="" [routerLink]="[route.url]">{{ route.displayName }}</a>
-        </li>
-        <li
-          *ngIf="route.terminal"
-          class="breadcrumb-item active"
-          aria-current="page"
-        >
-          {{ route.displayName }}
-        </li>
-      </ng-template>
-    </ol>
-  </div>
-</breadcrumb>
 <div class="coursesContainer container">
-  <router-outlet></router-outlet>
+  <div class="row" *ngIf="!isAddingNewCourse">
+    <div class="col-md-4 searchWrapper">
+      <input type="text" placeholder="Type to search" />
+      <button class="btn btn-success">Search</button>
+    </div>
+    <div class="col-md-8 addCourseWrapper">
+      <button class="btn btn-primary addCourse" (click)="addNewCourse()">
+        <i-bs name="plus-square"></i-bs>
+        Add Course
+      </button>
+    </div>
+  </div>
+
+  <app-course-list
+    *ngIf="!isAddingNewCourse"
+    [courseItemsOverview]="courseItemsOverview"
+    (editCourseEvent)="editCourse($event)"
+    (deleteCourseEvent)="deleteCourse($event)"
+  ></app-course-list>
+
+  <app-course-item-detail
+    *ngIf="isAddingNewCourse"
+    [courseDetail]="courseDetail"
+    [dropdownSettings]="dropdownSettings"
+    [authors]="authors"
+    (cancelSaveEditEvent)="cancelSaveEdit()"
+    (saveChangesEvent)="saveChanges($event)"
+  ></app-course-item-detail>
 </div>
 <app-footer></app-footer>
