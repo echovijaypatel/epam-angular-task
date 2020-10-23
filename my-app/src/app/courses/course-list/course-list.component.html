@@ -1,16 +1,3 @@
-<div class="row" *ngIf="!isAddingNewCourse">
-  <div class="col-md-4 searchWrapper">
-    <input type="text" placeholder="Type to search" />
-    <button class="btn btn-success">Search</button>
-  </div>
-  <div class="col-md-8 addCourseWrapper">
-    <button class="btn btn-primary addCourse" (click)="addNewCourse()">
-      <i-bs name="plus-square"></i-bs>
-      Add Course
-    </button>
-  </div>
-</div>
-
 <div *ngFor="let item of courseItemsOverview" class="row coursesOverview">
   <div class="col-md-8 courseSection">
     <div class="title">{{ item.Title }}</div>
@@ -51,6 +38,7 @@
     </div>
   </div>
 </div>
+
 <div class="loadMore">
   <a href="#"> Load More</a>
 </div>

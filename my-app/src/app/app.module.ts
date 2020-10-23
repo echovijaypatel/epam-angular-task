@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
-import {BreadcrumbModule} from 'angular-crumbs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,7 +15,6 @@ import { ErrorComponent } from './error/error.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { CoursesComponent } from './courses/courses.component';
 import { CourseListComponent } from './courses/course-list/course-list.component';
-import { CourseItemOverviewComponent } from './courses/course-item-overview/course-item-overview.component';
 import { CourseItemDetailComponent } from './courses/course-item-detail/course-item-detail.component';
 import { NumberToMinutes } from './services/numbertominutes.pipe';
 
@@ -31,7 +29,6 @@ import { NumberToMinutes } from './services/numbertominutes.pipe';
     CourseListComponent,
     ErrorComponent,
     CoursesComponent,
-    CourseItemOverviewComponent,
     CourseItemDetailComponent,
   ],
   imports: [
@@ -40,7 +37,6 @@ import { NumberToMinutes } from './services/numbertominutes.pipe';
     AppRoutingModule,
     NgxBootstrapIconsModule.pick(allIcons),
     NgMultiSelectDropDownModule.forRoot(),
-    BreadcrumbModule,
   ],
   providers: [NumberToMinutes, AuthGuardService],
   bootstrap: [AppComponent],

@@ -14,24 +14,6 @@ const routes: Routes = [
     path: 'courses',
     canActivate: [AuthGuardService],
     component: CoursesComponent,
-    data: { breadcrumb: 'Courses' },
-    children: [
-      {
-        path: '',
-        component: CourseListComponent,
-        data: { breadcrumb: 'List'},
-      },
-      {
-        path: 'new',
-        component: CourseItemDetailComponent,
-        data: { breadcrumb: 'New Course'},
-      },
-      {
-        path: 'edit/:id',
-        component: CourseItemDetailComponent,
-        data: { breadcrumb: 'Update Course'},
-      },
-    ],
   },
   { path: '', component: LoginComponent, pathMatch: 'full' },
   { path: '**', component: ErrorComponent },
