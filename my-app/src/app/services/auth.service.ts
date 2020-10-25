@@ -6,6 +6,7 @@ export class AuthService {
 
   setUsername(username: string) {
     this.username = username;
+    return this.username;
   }
 
   getUsername() {

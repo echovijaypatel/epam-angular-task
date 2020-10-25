@@ -51,7 +51,9 @@ export class CoursesComponent implements OnInit {
   }
 
   deleteCourse(id) {
-    this.courseItemsOverview = this.courseService.deleteCourse(id);
+    if (confirm('Are you sure to delete?')) {
+      this.courseItemsOverview = this.courseService.deleteCourse(id);
+    }
   }
 
   saveChanges(courseDetail: Course) {

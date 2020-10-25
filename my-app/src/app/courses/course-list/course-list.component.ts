@@ -28,8 +28,6 @@ export class CourseListComponent implements OnInit {
   }
 
   deleteCourse(id) {
-    if (confirm('Are you sure to delete?')) {
-      this.deleteCourseEvent.emit(id);
-    }
+    this.deleteCourseEvent.emit(id);
   }
 }

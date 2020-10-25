@@ -25,7 +25,7 @@ export class CourseService {
         Duration: 28,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
-        CreationDate: new Date(),
+        CreationDate: new Date(2020,8,22),
         Authors: this.allAuthors,
         SelectedAuthors: this.selectedAuthors,
       },
@@ -35,7 +35,7 @@ export class CourseService {
         Duration: 28,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
-        CreationDate: new Date(),
+        CreationDate: new Date(2020,8,22),
         Authors: this.allAuthors,
         SelectedAuthors: this.selectedAuthors,
       },
@@ -45,7 +45,7 @@ export class CourseService {
         Duration: 28,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
-        CreationDate: new Date(),
+        CreationDate: new Date(2020,8,22),
         Authors: this.allAuthors,
         SelectedAuthors: this.selectedAuthors,
       },
@@ -55,7 +55,7 @@ export class CourseService {
         Duration: 28,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
-        CreationDate: new Date(),
+        CreationDate: new Date(2020,8,22),
         Authors: this.allAuthors,
         SelectedAuthors: this.selectedAuthors,
       },
@@ -65,7 +65,7 @@ export class CourseService {
         Duration: 28,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
-        CreationDate: new Date(),
+        CreationDate: new Date(2020,8,22),
         Authors: this.allAuthors,
         SelectedAuthors: this.selectedAuthors,
       },
@@ -75,7 +75,7 @@ export class CourseService {
         Duration: 28,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
-        CreationDate: new Date(),
+        CreationDate: new Date(2020,8,22),
         Authors: this.allAuthors,
         SelectedAuthors: this.selectedAuthors,
       },
@@ -85,7 +85,7 @@ export class CourseService {
         Duration: 28,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
-        CreationDate: new Date(),
+        CreationDate: new Date(2020,8,22),
         Authors: this.allAuthors,
         SelectedAuthors: this.selectedAuthors,
       },

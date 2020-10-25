@@ -22,7 +22,7 @@
       </div>
       <div class="itemSection">
         <textarea
-          class="inputItem"
+          class="inputItem description"
           type="textarea"
           placeholder="Add description"
           [(ngModel)]="courseDetail.Description"
@@ -36,7 +36,7 @@
       </div>
       <div class="itemSection">
         <input
-          class="inputItem normalWidth"
+          class="inputItem normalWidth duration"
           type="number"
           placeholder="Minutes"
           [(ngModel)]="courseDetail.Duration"
@@ -51,7 +51,7 @@
       </div>
       <div class="itemSection">
         <input
-          class="inputItem normalWidth"
+          class="inputItem normalWidth creationDate"
           type="date"
           placeholder="Date"
           [(ngModel)]="courseDetail.CreationDate"
@@ -65,7 +65,6 @@
       </div>
       <div class="itemSection">
         <ng-multiselect-dropdown
-          [placeholder]="'Select Authors'"
           [settings]="dropdownSettings"
           [data]="courseDetail.Authors"
           [(ngModel)]="courseDetail.SelectedAuthors"
