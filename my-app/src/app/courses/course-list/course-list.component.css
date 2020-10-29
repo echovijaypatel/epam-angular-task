@@ -6,6 +6,15 @@
   border-radius: 5px;
   box-shadow: 1px 2px 1px 2px #888888;
 }
+.coursesOverview.futureCourse{
+  border: 2px solid blue;
+}
+.coursesOverview.freshCourse{
+  border: 2px solid green;
+}
+.coursesOverview.oldCourse{
+  border: 2px solid red;
+}
 .durationWrapper div {
   width: 107px;
 }

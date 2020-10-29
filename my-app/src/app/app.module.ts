@@ -17,6 +17,7 @@ import { CoursesComponent } from './courses/courses.component';
 import { CourseListComponent } from './courses/course-list/course-list.component';
 import { CourseItemDetailComponent } from './courses/course-item-detail/course-item-detail.component';
 import { NumberToMinutes } from './services/numbertominutes.pipe';
+import { CourseListHighlightDirective } from './courses/course-list/course-list.directive';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { NumberToMinutes } from './services/numbertominutes.pipe';
     ErrorComponent,
     CoursesComponent,
     CourseItemDetailComponent,
+    CourseListHighlightDirective,
   ],
   imports: [
     FormsModule,
