@@ -28,54 +28,28 @@ describe('CourseItemDetailComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display title', () => {
-    component.courseDetail = courseService.getCourse(1);
-    component.ngOnInit();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      let title = fixture.debugElement.query(By.css('.ctitle'));
-      expect(title.nativeElement.value).toContain(component.courseDetail.Title);
-    });
-  });
-
-  it('should display description', () => {
-    component.courseDetail = courseService.getCourse(1);
-    component.ngOnInit();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      let title = fixture.debugElement.query(By.css('.description'));
-      expect(title.nativeElement.value).toContain(
-        component.courseDetail.Description
-      );
-    });
-  });
-
-  it('should display duration', () => {
-    component.courseDetail = courseService.getCourse(1);
-    component.ngOnInit();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      let title = fixture.debugElement.query(By.css('.duration'));
-      expect(title.nativeElement.value).toContain(
-        component.courseDetail.Duration
-      );
-    });
-  });
-
   it('should do nothing on onItemSelect', () => {
+    component.courseDetail = courseService.getCourse(1);
     component.onItemSelect({});
+    expect(component).toBeTruthy();
   });
 
   it('should do nothing on OnItemDeSelect', () => {
+    component.courseDetail = courseService.getCourse(1);
     component.OnItemDeSelect({});
+    expect(component).toBeTruthy();
   });
 
   it('should do nothing on onSelectAll', () => {
+    component.courseDetail = courseService.getCourse(1);
     component.onSelectAll({});
+    expect(component).toBeTruthy();
   });
 
   it('should do nothing on onDeSelectAll', () => {
+    component.courseDetail = courseService.getCourse(1);
     component.onDeSelectAll({});
+    expect(component).toBeTruthy();
   });
 
   it('should emit on onSave', () => {
