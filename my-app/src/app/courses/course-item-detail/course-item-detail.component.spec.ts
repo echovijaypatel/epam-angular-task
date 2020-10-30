@@ -82,11 +82,13 @@ describe('CourseItemDetailComponent', () => {
     component.courseDetail = courseService.getCourse(1);
     spyOn(component.saveChangesEvent, 'emit');
     component.onSave();
-    expect(component.saveChangesEvent.emit).toHaveBeenCalled();
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.saveChangesEvent.emit).toHaveBeenCalled();
+    });
   });
 
   it('should emit onCancel', () => {
-    component.courseDetail = courseService.getCourse(1);
     spyOn(component.cancelSaveEditEvent, 'emit');
     component.onCancel();
     expect(component.cancelSaveEditEvent.emit).toHaveBeenCalled();
