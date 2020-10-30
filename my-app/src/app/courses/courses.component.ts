@@ -38,6 +38,7 @@ export class CoursesComponent implements OnInit {
       Title: '',
       Description: '',
       Duration: 10,
+      IsTopRated: false,
       CreationDate: new Date(),
       SelectedAuthors: [],
       Authors: this.courseService.getAllAuthors(),
@@ -59,10 +60,10 @@ export class CoursesComponent implements OnInit {
   saveChanges(courseDetail: Course) {
     if (courseDetail.Id > 0) {
       console.log('Updating ' + courseDetail.Id);
-      this.courseService.updateCourse(courseDetail);
+      this.courseItemsOverview = this.courseService.updateCourse(courseDetail);
     } else {
       console.log('adding');
-      this.courseService.addCourse(courseDetail);
+      this.courseItemsOverview = this.courseService.addCourse(courseDetail);
     }
     this.isAddingNewCourse = false;
   }

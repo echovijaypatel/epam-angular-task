@@ -18,6 +18,8 @@ import { CourseListComponent } from './courses/course-list/course-list.component
 import { CourseItemDetailComponent } from './courses/course-item-detail/course-item-detail.component';
 import { NumberToMinutes } from './services/numbertominutes.pipe';
 import { CourseListHighlightDirective } from './courses/course-list/course-list.directive';
+import { CourseListFilter } from './courses/course-list/course-list.filter.pipe';
+import { CourseListOrder } from './courses/course-list/course-list.order.pipe';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { CourseListHighlightDirective } from './courses/course-list/course-list.
     CoursesComponent,
     CourseItemDetailComponent,
     CourseListHighlightDirective,
+    CourseListFilter,
+    CourseListOrder,
   ],
   imports: [
     FormsModule,

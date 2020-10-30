@@ -22,7 +22,8 @@ export class CourseService {
       {
         Id: 1,
         Title: 'Video Course 1. Name Tag',
-        Duration: 28,
+        Duration: 90,
+        IsTopRated: true,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
         CreationDate: new Date(2020, 10, 22),
@@ -33,6 +34,7 @@ export class CourseService {
         Id: 2,
         Title: 'Video Course 2. Name Tag',
         Duration: 28,
+        IsTopRated: false,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
         CreationDate: new Date(2020, 9, 29),
@@ -42,7 +44,8 @@ export class CourseService {
       {
         Id: 3,
         Title: 'Video Course 3. Name Tag',
-        Duration: 28,
+        Duration: 70,
+        IsTopRated: false,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
         CreationDate: new Date(2020, 9, 28),
@@ -53,6 +56,7 @@ export class CourseService {
         Id: 4,
         Title: 'Video Course 4. Name Tag',
         Duration: 28,
+        IsTopRated: false,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
         CreationDate: new Date(2020, 8, 22),
@@ -63,9 +67,10 @@ export class CourseService {
         Id: 5,
         Title: 'Video Course 5. Name Tag',
         Duration: 28,
+        IsTopRated: false,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
-        CreationDate: new Date(2020, 8, 22),
+        CreationDate: new Date(2020, 8, 1),
         Authors: this.allAuthors,
         SelectedAuthors: this.selectedAuthors,
       },
@@ -73,9 +78,10 @@ export class CourseService {
         Id: 6,
         Title: 'Video Course 6. Name Tag',
         Duration: 28,
+        IsTopRated: false,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
-        CreationDate: new Date(2020, 8, 22),
+        CreationDate: new Date(2020, 8, 2),
         Authors: this.allAuthors,
         SelectedAuthors: this.selectedAuthors,
       },
@@ -83,9 +89,10 @@ export class CourseService {
         Id: 7,
         Title: 'Video Course 7. Name Tag',
         Duration: 28,
+        IsTopRated: false,
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
-        CreationDate: new Date(2020, 8, 22),
+        CreationDate: new Date(2020, 8, 5),
         Authors: this.allAuthors,
         SelectedAuthors: this.selectedAuthors,
       },
@@ -112,7 +119,7 @@ export class CourseService {
   addCourse(course: Course): Course[] {
     course.Id = this.getNextId();
     this.courseItemsOverview.push(course);
-    return this.courseItemsOverview;
+    return this.courseItemsOverview.slice(0);
   }
 
   updateCourse(course: Course): Course[] {
@@ -122,14 +129,15 @@ export class CourseService {
         break; //Stop this loop, we found it!
       }
     }
-    return this.courseItemsOverview;
+    return this.courseItemsOverview.slice(0);
   }
 
   deleteCourse(id): Course[] {
+    debugger;
     this.courseItemsOverview = this.courseItemsOverview.filter(
       (item) => item.Id !== id
     );
-    return this.courseItemsOverview;
+    return this.courseItemsOverview.slice(0);
   }
 
   private getNextId(): number {

@@ -5,6 +5,7 @@ export interface Course {
   Title: string;
   CreationDate: Date;
   Duration: number;
+  IsTopRated: boolean;
   Description: string;
   Authors: User[];
   SelectedAuthors: User[];
