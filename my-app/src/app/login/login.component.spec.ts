@@ -53,13 +53,13 @@ describe('LoginComponent', () => {
   it('should login', () => {
     component.username = 'Test@gmail.com';
     component.password = 'Test';
-    authService.setUsername('Test@gmail.com');
+    authService.login('Test@gmail.com');
     component.ngOnInit();
     let btn = fixture.debugElement.query(By.css('.loginbtn'));
     btn.triggerEventHandler('click', null);
     fixture.detectChanges();
     fixture.whenStable().then(() => {
-      let usernameInService = authService.getUsername();
+      let usernameInService = authService.getUserInfo();
       expect(usernameInService).toEqual('Test@gmail.com');
     });
   });
@@ -68,7 +68,7 @@ describe('LoginComponent', () => {
     component.username = 'Test@gmail.com';
     component.password = 'Test';
     component.onLogin();
-    let usernameInService = authService.getUsername();
+    let usernameInService = authService.getUserInfo();
     expect(usernameInService).toEqual('Test@gmail.com');
   });
 });

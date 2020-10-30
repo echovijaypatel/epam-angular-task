@@ -12,7 +12,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
     component: CoursesComponent,
   },
-  { path: '', component: LoginComponent, pathMatch: 'full' },
+  { path: '', component: LoginComponent },
   { path: '**', component: ErrorComponent },
 ];
 

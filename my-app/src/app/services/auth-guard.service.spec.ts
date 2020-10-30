@@ -28,12 +28,12 @@ describe('Logged in guard should', () => {
   });
 
   it('be able to hit route when user is logged in', () => {
-    authService.setUsername('Test username');
+    authService.login('Test username');
     expect(authGuardService.canActivate()).toBe(true);
   });
 
   it('not be able to hit route when user is not logged in', () => {
-    authService.setUsername(null);
+    authService.logout();
     expect(authGuardService.canActivate()).toBe(false);
   });
 });

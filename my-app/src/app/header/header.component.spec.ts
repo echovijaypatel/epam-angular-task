@@ -28,7 +28,7 @@ describe('HeaderComponent', () => {
   });
 
   it('should show username', () => {
-    authService.setUsername('Test');
+    authService.login('Test');
     component.ngOnInit();
     fixture.detectChanges();
     fixture.whenStable().then(() => {
@@ -38,7 +38,7 @@ describe('HeaderComponent', () => {
   });
 
   it('should not show username', () => {
-    authService.setUsername('');
+    authService.logout();
     component.ngOnInit();
     fixture.detectChanges();
     fixture.whenStable().then(() => {
@@ -48,7 +48,7 @@ describe('HeaderComponent', () => {
   });
 
   it('should logout work', () => {
-    authService.setUsername('Test');
+    authService.login('Test');
     component.ngOnInit();
     fixture.detectChanges();
     fixture.whenStable().then(() => {
@@ -56,7 +56,7 @@ describe('HeaderComponent', () => {
       btn.triggerEventHandler('click', null);
       fixture.detectChanges();
       let usernameInHtml = fixture.debugElement.query(By.css('.username'));
-      let usernameInService = authService.getUsername();
+      let usernameInService = authService.getUserInfo();
       expect(usernameInHtml).toBeNull();
       expect(usernameInService).toEqual('');
     });
