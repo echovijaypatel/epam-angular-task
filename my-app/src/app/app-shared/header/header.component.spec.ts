@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '../services/auth.service';
 import { By } from '@angular/platform-browser';
+import { AuthService } from 'src/app/services/auth.service';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
