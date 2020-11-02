@@ -7,7 +7,10 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { CourseService } from 'src/app/services/course.service';
 import { Course } from '../models/course';
+import { User } from '../models/user';
 import { CourseListFilter } from './course-list.filter.pipe';
 
 @Component({
@@ -17,17 +20,29 @@ import { CourseListFilter } from './course-list.filter.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseListComponent implements OnInit {
+  isAddingNewCourse: boolean;
   searchStr: string;
   courseItemsOverviewFiltered: Course[];
-  @Input() courseItemsOverview: Course[];
-  @Output() addCourseEvent = new EventEmitter<number>();
-  @Output() editCourseEvent = new EventEmitter<number>();
-  @Output() deleteCourseEvent = new EventEmitter<number>();
+  courseItemsOverview: Course[];
+  dropdownSettings: IDropdownSettings = {};
+  courseDetail: Course;
+  authors: User[];
+  @Output() showHideFormEvent = new EventEmitter<boolean>();
 
-  constructor() {}
+  constructor(private courseService: CourseService) {}
 
   ngOnInit(): void {
-    this.courseItemsOverviewFiltered = this.courseItemsOverview;
+    this.refreshList(this.courseService.getCourses());
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'Id',
+      textField: 'FirstName',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+    this.authors = this.courseService.getAllAuthors();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -41,7 +56,17 @@ export class CourseListComponent implements OnInit {
   }
 
   addNewCourse() {
-    this.addCourseEvent.emit();
+    this.courseDetail = {
+      Id: 0,
+      Title: '',
+      Description: '',
+      Duration: 10,
+      IsTopRated: false,
+      CreationDate: new Date(),
+      SelectedAuthors: [],
+      Authors: this.courseService.getAllAuthors(),
+    };
+    this.isAddingNewCourse = true;
   }
 
   searchCourse() {
@@ -53,10 +78,31 @@ export class CourseListComponent implements OnInit {
   }
 
   editCourse(id) {
-    this.editCourseEvent.emit(id);
+    this.courseDetail = this.courseService.getCourse(id);
+    this.isAddingNewCourse = true;
   }
 
   deleteCourse(id) {
-    this.deleteCourseEvent.emit(id);
+    if (confirm('Are you sure to delete?')) {
+      this.refreshList(this.courseService.deleteCourse(id));
+    }
+  }
+
+  saveChanges(courseDetail: Course) {
+    if (courseDetail.Id > 0) {
+      this.refreshList(this.courseService.updateCourse(courseDetail));
+    } else {
+      this.refreshList(this.courseService.addCourse(courseDetail));
+    }
+    this.isAddingNewCourse = false;
+  }
+
+  cancelSaveEdit() {
+    this.isAddingNewCourse = false;
+  }
+
+  refreshList(data) {
+    this.courseItemsOverview = data;
+    this.courseItemsOverviewFiltered = data;
   }
 }

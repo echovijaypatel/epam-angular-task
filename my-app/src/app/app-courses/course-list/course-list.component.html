@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="!isAddingNewCourse">
   <div class="col-md-4 searchWrapper">
     <input type="text" placeholder="Text to search" [(ngModel)]="searchStr" />
     <button class="btn btn-success" (click)="searchCourse()">Search</button>
@@ -10,10 +10,10 @@
     </button>
   </div>
 </div>
-<div class="noDataMsg" *ngIf="courseItemsOverviewFiltered.length < 1">
+<div class="noDataMsg" *ngIf="!isAddingNewCourse && courseItemsOverviewFiltered.length < 1">
   No Data, Feel free to add some courses or change filter.
 </div>
-<div *ngIf="courseItemsOverviewFiltered.length > 0">
+<div *ngIf="!isAddingNewCourse && courseItemsOverviewFiltered.length > 0">
   <div
     *ngFor="let item of courseItemsOverviewFiltered | CourseListOrder"
     class="row coursesOverview"
@@ -77,3 +77,12 @@
     <a href="#" class="loadMoreButton"> Load More</a>
   </div>
 </div>
+
+<app-course-item-detail
+  *ngIf="isAddingNewCourse"
+  [courseDetail]="courseDetail"
+  [dropdownSettings]="dropdownSettings"
+  [authors]="authors"
+  (cancelSaveEditEvent)="cancelSaveEdit()"
+  (saveChangesEvent)="saveChanges($event)"
+></app-course-item-detail>
