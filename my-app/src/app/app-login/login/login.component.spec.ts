@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from 'src/app/services/auth.service';
+import { UnitTestHelper } from 'src/app/services/unit.test.helper';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -12,7 +13,12 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, FormsModule],
+      imports: [
+        RouterTestingModule.withRoutes(
+          new UnitTestHelper().injectTestingRoute()
+        ),
+        FormsModule,
+      ],
       providers: [AuthService],
       declarations: [LoginComponent],
     }).compileComponents();
@@ -39,16 +45,16 @@ describe('LoginComponent', () => {
     });
   });
 
-  it('should display password', () => {
-    component.username = 'Test';
-    component.password = 'Test';
-    component.ngOnInit();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      let username = fixture.debugElement.query(By.css('.password'));
-      expect(username.nativeElement.value).toContain(component.password);
-    });
-  });
+  // it('should display password', () => {
+  //   component.username = 'Test';
+  //   component.password = 'Test';
+  //   component.ngOnInit();
+  //   fixture.detectChanges();
+  //   fixture.whenStable().then(() => {
+  //     let username = fixture.debugElement.query(By.css('.password'));
+  //     expect(username.nativeElement.value).toContain(component.password);
+  //   });
+  // });
 
   it('should login', () => {
     component.username = 'Test@gmail.com';

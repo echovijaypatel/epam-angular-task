@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth-guard.service';
+import { UnitTestHelper } from './unit.test.helper';
 
 describe('Logged in guard should', () => {
   let authGuardService: AuthGuardService;
@@ -16,7 +17,10 @@ describe('Logged in guard should', () => {
   // beforeEach
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, FormsModule, CommonModule],
+      imports: [
+        RouterTestingModule.withRoutes(
+          new UnitTestHelper().injectTestingRoute()
+        ), FormsModule, CommonModule],
       providers: [
         AuthGuardService,
         AuthService,

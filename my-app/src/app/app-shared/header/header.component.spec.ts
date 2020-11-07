@@ -3,6 +3,7 @@ import { HeaderComponent } from './header.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { AuthService } from 'src/app/services/auth.service';
+import { UnitTestHelper } from 'src/app/services/unit.test.helper';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -11,7 +12,11 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule.withRoutes(
+          new UnitTestHelper().injectTestingRoute()
+        ),
+      ],
       providers: [AuthService],
       declarations: [HeaderComponent],
     }).compileComponents();
