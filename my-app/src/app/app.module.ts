@@ -17,6 +17,7 @@ import { CourseItemDetailComponent } from './app-courses/course-item-detail/cour
 import { CourseListFilter } from './app-courses/course-list/course-list.filter.pipe';
 import { CourseListHighlightDirective } from './app-courses/course-list/course-list.directive';
 import { CourseListOrder } from './app-courses/course-list/course-list.order.pipe';
+import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { CourseListOrder } from './app-courses/course-list/course-list.order.pip
     AppLoginModule,
     AppSharedModule,
     NgMultiSelectDropDownModule.forRoot(),
+    NgDynamicBreadcrumbModule,
   ],
   providers: [NumberToMinutes, AuthGuardService],
   bootstrap: [AppComponent],

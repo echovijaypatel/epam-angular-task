@@ -1,14 +1,10 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Course } from '../models/course';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { User } from '../models/user';
 import { CourseService } from 'src/app/services/course.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
 
 @Component({
   selector: 'app-course-item-detail',
@@ -16,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./course-item-detail.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CourseItemDetailComponent implements OnInit, OnDestroy {
+export class CourseItemDetailComponent implements OnInit {
   courseDetail: Course;
   dropdownSettings: IDropdownSettings = {};
   authors: User[];
@@ -25,6 +21,7 @@ export class CourseItemDetailComponent implements OnInit, OnDestroy {
   constructor(
     public router: Router,
     public route: ActivatedRoute,
+    private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
     private courseService: CourseService
   ) {
     this.dropdownSettings = {
@@ -40,13 +37,17 @@ export class CourseItemDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.router.events.subscribe((val) => {
-      let courseId = this.route.snapshot.paramMap.get('id');
-      console.log('changed-' + courseId);
-      this.loadCourse(courseId);
-    });
     let courseId = this.route.snapshot.paramMap.get('id');
     this.loadCourse(courseId);
+    this.setBreadcrumb();
+  }
+
+  private setBreadcrumb() {
+    const breadcrumb = {
+      customText: '',
+      dynamicText: this.courseDetail.Title,
+    };
+    this.ngDynamicBreadcrumbService.updateBreadcrumbLabels(breadcrumb);
   }
 
   private loadCourse(courseId: string) {

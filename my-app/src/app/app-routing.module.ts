@@ -13,14 +13,49 @@ const routes: Routes = [
     path: 'courses',
     canActivate: [AuthGuardService],
     component: CoursesComponent,
+    data: {
+      title: 'Courses',
+      breadcrumb: [
+        {
+          label: 'Courses',
+          url: '',
+        },
+      ],
+    },
     children: [
       {
         path: 'new',
         component: CourseItemDetailComponent,
+        data: {
+          title: 'New',
+          breadcrumb: [
+            {
+              label: 'Courses',
+              url: '/courses',
+            },
+            {
+              label: 'New',
+              url: '',
+            },
+          ],
+        },
       },
       {
         path: ':id',
         component: CourseItemDetailComponent,
+        data: {
+          title: 'Edit',
+          breadcrumb: [
+            {
+              label: 'Courses',
+              url: '/courses',
+            },
+            {
+              label: 'Edit {{dynamicText}}',
+              url: '',
+            },
+          ],
+        },
       },
       {
         path: '',

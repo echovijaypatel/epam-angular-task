@@ -1,7 +1,9 @@
 <form (ngSubmit)="onSave()" #addNewForm="ngForm">
   <div class="col-md-12 newCourseWrapper">
     <div class="newCourse">
-      <div class="title">New Course</div>
+      <div class="title">
+        {{ courseDetail.Id > 0 ? "Edit Course" : "New Course" }}
+      </div>
       <div class="itemSectionTitle">
         <div class="item">Title:</div>
         <div class="errorItem floatRight">*Required</div>
@@ -44,7 +46,9 @@
           required
           min="10"
         />
-        <span class="courseDuration">{{ courseDetail.Duration | NumberToMinutes }}</span>
+        <span class="courseDuration">{{
+          courseDetail.Duration | NumberToMinutes
+        }}</span>
       </div>
       <div class="itemSectionTitle inlineWrapper">
         <div class="item disInlineTitle">Date:</div>
