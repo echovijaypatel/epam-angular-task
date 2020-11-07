@@ -52,21 +52,48 @@ describe('CourseListComponent', () => {
     component.ngOnChanges(changes);
   });
 
-  it('should emit add event', () => {
-    spyOn(component.addCourseEvent, 'emit');
+  it('should add course', () => {
     component.addNewCourse();
-    expect(component.addCourseEvent.emit).toHaveBeenCalled();
+    expect(component.isAddingNewCourse).toBeTruthy();
   });
 
-  it('should emit edit event', () => {
-    spyOn(component.editCourseEvent, 'emit');
+  it('should edit course', () => {
     component.editCourse(1);
-    expect(component.editCourseEvent.emit).toHaveBeenCalled();
+    expect(component.isAddingNewCourse).toBeTruthy();
   });
 
-  it('should emit delete event', () => {
-    spyOn(component.deleteCourseEvent, 'emit');
+  it('should delete course', () => {
+    spyOn(window, 'confirm').and.callFake(function () {
+      return true;
+    });
     component.deleteCourse(1);
-    expect(component.deleteCourseEvent.emit).toHaveBeenCalled();
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      var checkDeleted = courseService.getCourse(1);
+      expect(checkDeleted).toBeNull();
+    });
+  });
+
+  it('should save new course', () => {
+    var courses = courseService.getCourses().length;
+    var course = courseService.getCourse(1);
+    course.Id = 0;
+    component.saveChanges(course);
+    var newCourses = courseService.getCourses().length;
+    expect(newCourses).toBeGreaterThan(courses);
+  });
+
+  it('should edit course', () => {
+    var course = courseService.getCourse(1);
+    var newTitle = 'New Title';
+    course.Title = newTitle;
+    component.saveChanges(course);
+    var course = courseService.getCourse(1);
+    expect(course.Title).toEqual(newTitle);
+  });
+
+  it('Cancel save-edit course', () => {
+    component.cancelSaveEdit();
+    expect(component.isAddingNewCourse).toBeFalsy();
   });
 });

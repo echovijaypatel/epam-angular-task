@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 import { CourseService } from 'src/app/services/course.service';
+import { NumberToMinutes } from 'src/app/services/numbertominutes.pipe';
 
 import { CourseItemDetailComponent } from './course-item-detail.component';
 
@@ -12,9 +13,9 @@ describe('CourseItemDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule],
-      providers: [CourseService],
-      declarations: [CourseItemDetailComponent],
+      imports: [RouterTestingModule, FormsModule, ReactiveFormsModule],
+      providers: [CourseService, NumberToMinutes],
+      declarations: [CourseItemDetailComponent, NumberToMinutes],
     }).compileComponents();
   });
 
@@ -27,29 +28,19 @@ describe('CourseItemDetailComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should do nothing on onItemSelect', () => {
-    component.courseDetail = courseService.getCourse(1);
-    component.onItemSelect({});
-    expect(component).toBeTruthy();
+  it('should do nothing', () => {
+    component.ngOnInit();
+    component.onItemSelect(null);
+    component.OnItemDeSelect(null);
+    component.onSelectAll(null);
+    component.onDeSelectAll(null);
+    expect(true).toBeTrue();
   });
 
-  it('should do nothing on OnItemDeSelect', () => {
+  it('should emit on onCancel', () => {
     component.courseDetail = courseService.getCourse(1);
-    component.OnItemDeSelect({});
-    expect(component).toBeTruthy();
-  });
-
-  it('should do nothing on onSelectAll', () => {
-    component.courseDetail = courseService.getCourse(1);
-    component.onSelectAll({});
-    expect(component).toBeTruthy();
-  });
-
-  it('should do nothing on onDeSelectAll', () => {
-    component.courseDetail = courseService.getCourse(1);
-    component.onDeSelectAll({});
-    expect(component).toBeTruthy();
+    component.onCancel();
+    expect(true).toBeTrue();
   });
 
   it('should emit on onSave', () => {
@@ -60,11 +51,5 @@ describe('CourseItemDetailComponent', () => {
     fixture.whenStable().then(() => {
       expect(component.saveChangesEvent.emit).toHaveBeenCalled();
     });
-  });
-
-  it('should emit onCancel', () => {
-    spyOn(component.cancelSaveEditEvent, 'emit');
-    component.onCancel();
-    expect(component.cancelSaveEditEvent.emit).toHaveBeenCalled();
   });
 });
