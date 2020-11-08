@@ -1,21 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Author } from '../app-courses/models/author';
 import { Course } from '../app-courses/models/course';
+import { CourseDataService } from './course.data.service';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
+  private courseDataService: CourseDataService = new CourseDataService();
   private courseItemsOverview: Course[];
-  private allAuthors: Author[];
   private selectedAuthors: Author[];
 
   constructor() {
-    this.allAuthors = [
-      { id: 1, name: 'Johnny' },
-      { id: 2, name: 'Robert' },
-      { id: 3, name: 'Brad' },
-      { id: 4, name: 'Angelina' },
-      { id: 5, name: 'Scarlet' },
-    ];
     this.selectedAuthors = [{ id: 3, name: 'Brad' }];
 
     this.courseItemsOverview = [
@@ -27,7 +21,7 @@ export class CourseService {
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
         CreationDate: new Date(2020, 10, 22),
-        Authors: this.allAuthors,
+        Authors: this.courseDataService.getAllAuthors(),
         SelectedAuthors: this.selectedAuthors,
       },
       {
@@ -38,7 +32,7 @@ export class CourseService {
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
         CreationDate: new Date(2020, 9, 29),
-        Authors: this.allAuthors,
+        Authors: this.courseDataService.getAllAuthors(),
         SelectedAuthors: this.selectedAuthors,
       },
       {
@@ -49,7 +43,7 @@ export class CourseService {
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
         CreationDate: new Date(2020, 9, 28),
-        Authors: this.allAuthors,
+        Authors: this.courseDataService.getAllAuthors(),
         SelectedAuthors: this.selectedAuthors,
       },
       {
@@ -60,7 +54,7 @@ export class CourseService {
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
         CreationDate: new Date(2020, 8, 22),
-        Authors: this.allAuthors,
+        Authors: this.courseDataService.getAllAuthors(),
         SelectedAuthors: this.selectedAuthors,
       },
       {
@@ -71,7 +65,7 @@ export class CourseService {
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
         CreationDate: new Date(2020, 8, 1),
-        Authors: this.allAuthors,
+        Authors: this.courseDataService.getAllAuthors(),
         SelectedAuthors: this.selectedAuthors,
       },
       {
@@ -82,7 +76,7 @@ export class CourseService {
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
         CreationDate: new Date(2020, 8, 2),
-        Authors: this.allAuthors,
+        Authors: this.courseDataService.getAllAuthors(),
         SelectedAuthors: this.selectedAuthors,
       },
       {
@@ -93,14 +87,14 @@ export class CourseService {
         Description:
           "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
         CreationDate: new Date(2020, 8, 5),
-        Authors: this.allAuthors,
+        Authors: this.courseDataService.getAllAuthors(),
         SelectedAuthors: this.selectedAuthors,
       },
     ];
   }
 
   getAllAuthors(): Author[] {
-    return this.allAuthors;
+    return this.courseDataService.getAllAuthors();
   }
 
   getCourses(): Course[] {

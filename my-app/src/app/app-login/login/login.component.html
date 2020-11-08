@@ -3,11 +3,8 @@
   <div class="loginBody">
     <div class="loginSection loginTitle">
       <div class="loginItem">Login</div>
-      <div
-        class="errorItem floatRight"
-        [hidden]="loginForm.valid || loginForm.pristine"
-      >
-        Wrong e-mail or password.
+      <div class="errorItem floatRight" *ngIf="errorMsg.length > 0">
+        {{ errorMsg }}
       </div>
     </div>
     <div class="loginSection">
@@ -18,11 +15,10 @@
       <input
         class="inputItem username"
         type="text"
-        placeholder="Enter e-mail"
+        placeholder="Enter username"
         [(ngModel)]="username"
         name="username"
         required
-        email
       />
     </div>
     <div class="loginSection">

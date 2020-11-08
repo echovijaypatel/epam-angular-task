@@ -8,8 +8,9 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  username: string;
-  password: string;
+  username: string = 'Morales';
+  password: string = 'id';
+  errorMsg: string = '';
 
   constructor(public router: Router, private authService: AuthService) {}
 
@@ -20,8 +21,18 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    console.log('Login successfully - ' + this.username);
-    this.authService.login(this.username);
-    this.router.navigateByUrl('/courses');
+    this.authService
+      .login({
+        login: this.username,
+        password: this.password,
+      })
+      .subscribe(
+        (result) => {
+          this.authService.processLoginSuccess(result);
+        },
+        (error) => {
+          this.errorMsg = error.error;
+        }
+      );
   }
 }
