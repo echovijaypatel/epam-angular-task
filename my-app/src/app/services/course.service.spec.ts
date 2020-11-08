@@ -1,15 +1,16 @@
+import { Author } from '../app-courses/models/author';
 import { CourseService } from './course.service';
 
 // Straight Jasmine testing without Angular's testing support
 describe('CourseService', () => {
   let service: CourseService;
-  var selectedAuthors = [{ Id: 3, FirstName: 'Brad', LastName: 'Pitt' }];
-  var allAuthors = [
-    { Id: 1, FirstName: 'Johnny', LastName: 'Depp' },
-    { Id: 2, FirstName: 'Robert', LastName: 'Niro' },
-    { Id: 3, FirstName: 'Brad', LastName: 'Pitt' },
-    { Id: 4, FirstName: 'Angelina', LastName: 'Jolie' },
-    { Id: 5, FirstName: 'Scarlet', LastName: 'Johnson' },
+  var selectedAuthors: Author[] = [{ id: 3, name: 'Brad' }];
+  var allAuthors: Author[] = [
+    { id: 1, name: 'Johnny' },
+    { id: 2, name: 'Robert' },
+    { id: 3, name: 'Brad' },
+    { id: 4, name: 'Angelina' },
+    { id: 5, name: 'Scarlet' },
   ];
   var courseItemsOverview = [
     {

@@ -1,4 +1,4 @@
-import { User } from './user';
+import { Author } from './author';
 
 export interface Course {
   Id: number;
@@ -7,6 +7,6 @@ export interface Course {
   Duration: number;
   IsTopRated: boolean;
   Description: string;
-  Authors: User[];
-  SelectedAuthors: User[];
+  Authors: Author[];
+  SelectedAuthors: Author[];
 }

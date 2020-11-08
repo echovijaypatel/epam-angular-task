@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Course } from '../models/course';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { User } from '../models/user';
 import { CourseService } from 'src/app/services/course.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
+import { Author } from '../models/author';
 
 @Component({
   selector: 'app-course-item-detail',
@@ -15,7 +15,7 @@ import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
 export class CourseItemDetailComponent implements OnInit {
   courseDetail: Course;
   dropdownSettings: IDropdownSettings = {};
-  authors: User[];
+  authors: Author[];
   errorMessage: string;
 
   constructor(

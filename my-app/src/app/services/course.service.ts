@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
+import { Author } from '../app-courses/models/author';
 import { Course } from '../app-courses/models/course';
-import { User } from '../app-courses/models/user';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
   private courseItemsOverview: Course[];
-  private allAuthors: User[];
-  private selectedAuthors: User[];
+  private allAuthors: Author[];
+  private selectedAuthors: Author[];
 
   constructor() {
     this.allAuthors = [
-      { Id: 1, FirstName: 'Johnny', LastName: 'Depp' },
-      { Id: 2, FirstName: 'Robert', LastName: 'Niro' },
-      { Id: 3, FirstName: 'Brad', LastName: 'Pitt' },
-      { Id: 4, FirstName: 'Angelina', LastName: 'Jolie' },
-      { Id: 5, FirstName: 'Scarlet', LastName: 'Johnson' },
+      { id: 1, name: 'Johnny' },
+      { id: 2, name: 'Robert' },
+      { id: 3, name: 'Brad' },
+      { id: 4, name: 'Angelina' },
+      { id: 5, name: 'Scarlet' },
     ];
-    this.selectedAuthors = [{ Id: 3, FirstName: 'Brad', LastName: 'Pitt' }];
+    this.selectedAuthors = [{ id: 3, name: 'Brad' }];
 
     this.courseItemsOverview = [
       {
@@ -99,7 +99,7 @@ export class CourseService {
     ];
   }
 
-  getAllAuthors(): User[] {
+  getAllAuthors(): Author[] {
     return this.allAuthors;
   }
 
