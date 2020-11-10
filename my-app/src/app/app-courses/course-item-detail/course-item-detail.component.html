@@ -1,8 +1,8 @@
 <form (ngSubmit)="onSave()" #addNewForm="ngForm">
-  <div class="col-md-12 newCourseWrapper">
+  <div class="col-md-12 newCourseWrapper" *ngIf="courseDetail">
     <div class="newCourse">
       <div class="title">
-        {{ courseDetail.Id > 0 ? "Edit Course" : "New Course" }}
+        {{ courseDetail && courseDetail.id > 0 ? "Edit Course" : "New Course" }}
       </div>
       <div class="itemSectionTitle">
         <div class="item">Title:</div>
@@ -13,7 +13,7 @@
           class="inputItem"
           type="text"
           placeholder="Enter Title"
-          [(ngModel)]="courseDetail.Title"
+          [(ngModel)]="courseDetail.name"
           name="courseDetail.Title"
           required
         />
@@ -27,7 +27,7 @@
           class="inputItem description"
           type="textarea"
           placeholder="Add description"
-          [(ngModel)]="courseDetail.Description"
+          [(ngModel)]="courseDetail.description"
           name="courseDetail.Description"
           required
         ></textarea>
@@ -41,13 +41,13 @@
           class="inputItem normalWidth duration"
           type="number"
           placeholder="Minutes"
-          [(ngModel)]="courseDetail.Duration"
+          [(ngModel)]="courseDetail.length"
           name="courseDetail.Duration"
           required
           min="10"
         />
         <span class="courseDuration">{{
-          courseDetail.Duration | NumberToMinutes
+          courseDetail.length | NumberToMinutes
         }}</span>
       </div>
       <div class="itemSectionTitle inlineWrapper">
@@ -59,7 +59,8 @@
           class="inputItem normalWidth creationDate"
           type="date"
           placeholder="Date"
-          [(ngModel)]="courseDetail.CreationDate"
+          [ngModel]="courseDetail.date | date:'yyyy-MM-dd'"
+          (ngModelChange)="courseDetail.date = $event"
           name="courseDetail.CreationDate"
           required
         />
@@ -71,8 +72,8 @@
       <div class="itemSection">
         <ng-multiselect-dropdown
           [settings]="dropdownSettings"
-          [data]="courseDetail.Authors"
-          [(ngModel)]="courseDetail.SelectedAuthors"
+          [data]="allAuthors"
+          [(ngModel)]="courseDetail.authors"
           (onSelect)="onItemSelect($event)"
           (onSelectAll)="onSelectAll($event)"
           name="courseDetail.SelectedAuthors"

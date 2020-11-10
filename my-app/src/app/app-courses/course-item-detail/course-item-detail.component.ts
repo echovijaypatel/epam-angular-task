@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { Course } from '../models/course';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { CourseService } from 'src/app/services/course.service';
@@ -10,12 +15,11 @@ import { Author } from '../models/author';
   selector: 'app-course-item-detail',
   templateUrl: './course-item-detail.component.html',
   styleUrls: ['./course-item-detail.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseItemDetailComponent implements OnInit {
   courseDetail: Course;
   dropdownSettings: IDropdownSettings = {};
-  authors: Author[];
+  allAuthors: Author[];
   errorMessage: string;
 
   constructor(
@@ -26,46 +30,63 @@ export class CourseItemDetailComponent implements OnInit {
   ) {
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'Id',
-      textField: 'FirstName',
+      idField: 'id',
+      textField: 'name',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 3,
       allowSearchFilter: true,
     };
-    this.authors = this.courseService.getAllAuthors();
   }
 
   ngOnInit(): void {
+    // this.setBreadcrumb('');
+
     let courseId = this.route.snapshot.paramMap.get('id');
-    this.loadCourse(courseId);
-    this.setBreadcrumb();
+
+    this.courseService.getAllAuthors().subscribe(
+      (data) => {
+        this.allAuthors = data;
+        this.loadCourse(courseId);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
-  private setBreadcrumb() {
+  private setBreadcrumb(title:string) {
     const breadcrumb = {
       customText: '',
-      dynamicText: this.courseDetail.Title,
+      dynamicText: title,
     };
     this.ngDynamicBreadcrumbService.updateBreadcrumbLabels(breadcrumb);
   }
 
   private loadCourse(courseId: string) {
     if (courseId) {
-      this.courseDetail = this.courseService.getCourse(courseId);
+      this.courseService.getCourse(courseId).subscribe(
+        (data) => {
+          this.courseDetail = data;
+          this.setBreadcrumb(this.courseDetail.name);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     } else {
       this.courseDetail = {
-        Id: 0,
-        Title: '',
-        Description: '',
-        Duration: 10,
-        IsTopRated: false,
-        CreationDate: new Date(),
-        SelectedAuthors: [],
-        Authors: this.courseService.getAllAuthors(),
+        id: 0,
+        name: '',
+        description: '',
+        length: 10,
+        isTopRated: false,
+        date: new Date(),
+        authors: []
       };
     }
   }
+
   onItemSelect(item: any) {
     console.log(item);
   }
@@ -83,12 +104,25 @@ export class CourseItemDetailComponent implements OnInit {
   }
 
   onSave() {
-    if (this.courseDetail.Id > 0) {
-      this.courseService.updateCourse(this.courseDetail);
+    if (this.courseDetail.id > 0) {
+      this.courseService.updateCourse(this.courseDetail).subscribe(
+        (data) => {
+          this.router.navigate(['/courses']);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     } else {
-      this.courseService.addCourse(this.courseDetail);
+      this.courseService.addCourse(this.courseDetail).subscribe(
+        (data) => {
+          this.router.navigate(['/courses']);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     }
-    this.router.navigate(['/courses']);
   }
 
   onCancel() {

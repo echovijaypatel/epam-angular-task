@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
@@ -19,6 +19,7 @@ import { CourseListFilter } from './app-courses/course-list/course-list.filter.p
 import { CourseListHighlightDirective } from './app-courses/course-list/course-list.directive';
 import { CourseListOrder } from './app-courses/course-list/course-list.order.pipe';
 import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
+import { AuthInterceptor } from './services/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,15 @@ import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
     NgMultiSelectDropDownModule.forRoot(),
     NgDynamicBreadcrumbModule,
   ],
-  providers: [NumberToMinutes, AuthGuardService],
+  providers: [
+    NumberToMinutes,
+    AuthGuardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

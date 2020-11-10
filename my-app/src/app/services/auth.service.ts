@@ -21,6 +21,10 @@ export class AuthService {
   }
 
   processLoginSuccess(tokenRequest: TokenRequest) {
+    localStorage.setItem(
+      'token',
+      tokenRequest.token
+    );
     this.http
       .post<User>(this.config.apiUrl + '/auth/userinfo', tokenRequest)
       .subscribe(
@@ -39,6 +43,7 @@ export class AuthService {
 
   logout() {
     localStorage.setItem('username', '');
+    localStorage.setItem('token', '');
     this.username = '';
   }
 
@@ -50,5 +55,9 @@ export class AuthService {
   getUserInfo() {
     this.username = localStorage.getItem('username') || '';
     return this.username;
+  }
+
+  getToken() {
+    return localStorage.getItem('token') || '';
   }
 }

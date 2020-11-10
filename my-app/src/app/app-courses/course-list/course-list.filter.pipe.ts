@@ -9,6 +9,6 @@ export class CourseListFilter implements PipeTransform {
     if (!filter) {
       return courseItems;
     }
-    return courseItems.filter((x) => x.Title.toLowerCase().indexOf(filter.toLowerCase()) >= 0);
+    return courseItems.filter((x) => x.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0);
   }
 }

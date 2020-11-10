@@ -6,8 +6,9 @@ import { Course } from '../models/course';
 })
 export class CourseListOrder implements PipeTransform {
   transform(courseItems: Course[]): Course[] {
-    courseItems.sort((a, b) =>
-    new Date(b.CreationDate).getTime() - new Date(a.CreationDate).getTime());
+    courseItems.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
     return courseItems;
   }
 }
