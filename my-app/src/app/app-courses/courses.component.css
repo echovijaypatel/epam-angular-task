@@ -1,0 +1,11 @@
+.coursesContainer {
+  margin-bottom: 75px;
+}
+breadcrumb div {
+  background-color: #e9ecef;
+}
+
+.breadcrumb {
+  margin-left: 48px;
+}
+.breadCrumbWrapper{background-color: rgb(238, 238, 238);padding-left: 47px;}

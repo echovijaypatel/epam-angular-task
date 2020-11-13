@@ -1,0 +1,53 @@
+<app-header></app-header>
+<form (ngSubmit)="onLogin()" #loginForm="ngForm">
+  <div class="loginBody">
+    <div class="loginSection loginTitle">
+      <div class="loginItem">Login</div>
+      <div class="errorItem floatRight" *ngIf="errorMsg.length > 0">
+        {{ errorMsg }}
+      </div>
+    </div>
+    <div class="loginSection">
+      <div class="loginItem">Email:</div>
+      <div class="errorItem floatRight">*Required</div>
+    </div>
+    <div class="loginSection">
+      <input
+        class="inputItem username"
+        type="text"
+        placeholder="Enter username"
+        [(ngModel)]="username"
+        name="username"
+        required
+      />
+    </div>
+    <div class="loginSection">
+      <div class="loginItem">Password:</div>
+      <div class="errorItem floatRight">*Required</div>
+    </div>
+    <div class="loginSection">
+      <input
+        class="inputItem password"
+        type="password"
+        placeholder="Enter password"
+        [(ngModel)]="password"
+        name="password"
+        required
+      />
+    </div>
+    <div class="loginSection loginButtonWrapper">
+      <div class="forgetPassword">
+        <a href="#"> Forget Password? </a>
+      </div>
+      <div class="floatRight">
+        <input
+          type="submit"
+          class="btn btn-success loginbtn"
+          value="Login"
+          [disabled]="loginForm.touched && !loginForm.valid"
+        />
+      </div>
+    </div>
+  </div>
+</form>
+<app-footer></app-footer>
