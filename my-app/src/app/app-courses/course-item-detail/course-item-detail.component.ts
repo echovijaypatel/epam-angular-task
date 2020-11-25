@@ -1,7 +1,5 @@
 import {
-  ChangeDetectionStrategy,
   Component,
-  Input,
   OnInit,
 } from '@angular/core';
 import { Course } from '../models/course';
@@ -17,6 +15,7 @@ import { Author } from '../models/author';
   styleUrls: ['./course-item-detail.component.css'],
 })
 export class CourseItemDetailComponent implements OnInit {
+  courseId: string;
   courseDetail: Course;
   dropdownSettings: IDropdownSettings = {};
   allAuthors: Author[];
@@ -40,14 +39,12 @@ export class CourseItemDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.setBreadcrumb('');
-
-    let courseId = this.route.snapshot.paramMap.get('id');
-
+    this.courseId = this.route.snapshot.paramMap.get('id');
     this.courseService.getAllAuthors().subscribe(
       (data) => {
+        console.log(data);
         this.allAuthors = data;
-        this.loadCourse(courseId);
+        this.loadCourse();
       },
       (err) => {
         console.log(err);
@@ -55,7 +52,7 @@ export class CourseItemDetailComponent implements OnInit {
     );
   }
 
-  private setBreadcrumb(title:string) {
+  private setBreadcrumb(title: string) {
     const breadcrumb = {
       customText: '',
       dynamicText: title,
@@ -63,9 +60,9 @@ export class CourseItemDetailComponent implements OnInit {
     this.ngDynamicBreadcrumbService.updateBreadcrumbLabels(breadcrumb);
   }
 
-  private loadCourse(courseId: string) {
-    if (courseId) {
-      this.courseService.getCourse(courseId).subscribe(
+  private loadCourse() {
+    if (this.courseId) {
+      this.courseService.getCourse(this.courseId).subscribe(
         (data) => {
           this.courseDetail = data;
           this.setBreadcrumb(this.courseDetail.name);
@@ -82,7 +79,7 @@ export class CourseItemDetailComponent implements OnInit {
         length: 10,
         isTopRated: false,
         date: new Date(),
-        authors: []
+        authors: [],
       };
     }
   }
