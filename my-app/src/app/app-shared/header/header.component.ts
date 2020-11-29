@@ -12,7 +12,14 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.username = this.authService.getUserInfo();
+    this.authService.getUserInfo().subscribe(
+      (result) => {
+        this.username = result.name.first + ' ' + result.name.last;
+      },
+      (error) => {
+        this.authService.logout();
+      }
+    );
   }
 
   onLogout() {

@@ -63,7 +63,7 @@ const routes: Routes = [
       },
     ],
   },
-  { path: '', component: LoginComponent },
+  { path: '', component: LoginComponent, pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
 

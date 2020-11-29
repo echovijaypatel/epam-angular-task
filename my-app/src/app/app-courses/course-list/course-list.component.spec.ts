@@ -13,16 +13,11 @@ describe('CourseListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule.withRoutes(
-          UnitTestHelper.injectTestingRoute()
-        ),
-        HttpClientModule
+        RouterTestingModule.withRoutes(UnitTestHelper.injectTestingRoute()),
+        HttpClientModule,
       ],
       providers: [CourseService, NumberToMinutes],
-      declarations: [
-        CourseListComponent,
-        NumberToMinutes,
-      ],
+      declarations: [CourseListComponent, NumberToMinutes],
     }).compileComponents();
   });
 
@@ -41,7 +36,11 @@ describe('CourseListComponent', () => {
   });
 
   it('search course', () => {
-    component.searchCourse();
+    component.searchCourse({
+      target: {
+        value: 'Test',
+      },
+    });
   });
 
   it('should add course', () => {
@@ -77,17 +76,17 @@ describe('CourseListComponent', () => {
   //   expect(newCourses).toBeGreaterThan(courses);
   // });
 
-//   // it('should edit course', () => {
-//   //   var course = courseService.getCourse(1);
-//   //   var newTitle = 'New Title';
-//   //   course.Title = newTitle;
-//   //   component.saveChanges(course);
-//   //   var course = courseService.getCourse(1);
-//   //   expect(course.Title).toEqual(newTitle);
-//   // });
+  //   // it('should edit course', () => {
+  //   //   var course = courseService.getCourse(1);
+  //   //   var newTitle = 'New Title';
+  //   //   course.Title = newTitle;
+  //   //   component.saveChanges(course);
+  //   //   var course = courseService.getCourse(1);
+  //   //   expect(course.Title).toEqual(newTitle);
+  //   // });
 
-//   // it('Cancel save-edit course', () => {
-//   //   component.cancelSaveEdit();
-//   //   expect(component.isAddingNewCourse).toBeFalsy();
-//   // });
+  //   // it('Cancel save-edit course', () => {
+  //   //   component.cancelSaveEdit();
+  //   //   expect(component.isAddingNewCourse).toBeFalsy();
+  //   // });
 });

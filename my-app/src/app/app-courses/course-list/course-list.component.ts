@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from '../models/course';
 
@@ -8,19 +10,35 @@ import { Course } from '../models/course';
   templateUrl: './course-list.component.html',
   styleUrls: ['./course-list.component.css'],
 })
-export class CourseListComponent implements OnInit {
+export class CourseListComponent implements OnInit, OnDestroy {
   start: number = 0;
   end: number = 1;
   batchSize: number = 1;
   sortKey: string = 'date desc';
   searchStr: string = '';
-
+  subscription = new Subscription();
+  searchTextChanged = new Subject<string>();
   courses: Course[] = [];
 
   constructor(public router: Router, private courseService: CourseService) {}
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   ngOnInit(): void {
     this.getCourses();
+    this.subscription = this.searchTextChanged
+    .pipe(
+      debounceTime(1000)
+    )
+    .subscribe((data) => {
+      console.log('Search-' + data);
+      this.start = 0;
+      this.end = 1;
+      this.searchStr = data;
+      this.getCourses();
+    });
   }
 
   getCourses() {
@@ -40,24 +58,15 @@ export class CourseListComponent implements OnInit {
     this.end = this.end + this.batchSize;
     this.getCourses();
   }
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (
-  //     changes &&
-  //     changes.courseItemsOverview &&
-  //     changes.courseItemsOverview.currentValue
-  //   )
-  //     this.courseItemsOverviewFiltered =
-  //       changes.courseItemsOverview.currentValue;
-  // }
 
   addNewCourse() {
     this.router.navigate(['/courses/new']);
   }
 
-  searchCourse() {
-    this.start = 0;
-    this.end = 1;
-    this.getCourses();
+  searchCourse($event) {
+    var inputValue: string = $event.target.value;
+    if (inputValue.length > 2 || inputValue.length == 0)
+      this.searchTextChanged.next(inputValue);
   }
 
   editCourse(id) {
@@ -66,8 +75,7 @@ export class CourseListComponent implements OnInit {
 
   deleteCourse(id) {
     if (confirm('Are you sure to delete?')) {
-      this.courseService.deleteCourse(id)
-      .subscribe(
+      this.courseService.deleteCourse(id).subscribe(
         (data) => {
           this.getCourses();
         },

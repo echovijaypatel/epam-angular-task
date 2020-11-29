@@ -15,11 +15,10 @@ import { AppLoginModule } from './app-login/app-login.module';
 import { CourseListComponent } from './app-courses/course-list/course-list.component';
 import { CoursesComponent } from './app-courses/courses.component';
 import { CourseItemDetailComponent } from './app-courses/course-item-detail/course-item-detail.component';
-import { CourseListFilter } from './app-courses/course-list/course-list.filter.pipe';
 import { CourseListHighlightDirective } from './app-courses/course-list/course-list.directive';
-import { CourseListOrder } from './app-courses/course-list/course-list.order.pipe';
 import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
 import { AuthInterceptor } from './services/auth-interceptor';
+import { LoadingInterceptor } from './app-shared/loading/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -29,8 +28,6 @@ import { AuthInterceptor } from './services/auth-interceptor';
     CoursesComponent,
     CourseItemDetailComponent,
     CourseListHighlightDirective,
-    CourseListFilter,
-    CourseListOrder,
   ],
   imports: [
     FormsModule,
@@ -49,6 +46,11 @@ import { AuthInterceptor } from './services/auth-interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
       multi: true,
     },
   ],

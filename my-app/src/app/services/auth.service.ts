@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Config } from 'src/environments/config';
 import { LoginRequest } from '../models/loginrequest';
 import { TokenRequest } from '../models/tokenrequest';
@@ -21,10 +22,7 @@ export class AuthService {
   }
 
   processLoginSuccess(tokenRequest: TokenRequest) {
-    localStorage.setItem(
-      'token',
-      tokenRequest.token
-    );
+    localStorage.setItem('token', tokenRequest.token);
     this.http
       .post<User>(this.config.apiUrl + '/auth/userinfo', tokenRequest)
       .subscribe(
@@ -52,9 +50,13 @@ export class AuthService {
     return this.username != '';
   }
 
-  getUserInfo() {
-    this.username = localStorage.getItem('username') || '';
-    return this.username;
+  getUserInfo(): Observable<User> {
+    var token = localStorage.getItem('token') || '';
+    var tokenRequest: TokenRequest = { token: token };
+    return this.http.post<User>(
+      this.config.apiUrl + '/auth/userinfo',
+      tokenRequest
+    );
   }
 
   getToken() {

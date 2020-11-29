@@ -6,6 +6,7 @@ import { LogoComponent } from './logo/logo.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     HeaderComponent,
     FooterComponent,
     PageNotFoundComponent,
+    LoadingComponent
   ],
   imports: [BrowserModule, NgxBootstrapIconsModule.pick(allIcons)],
   exports: [
@@ -20,6 +22,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     HeaderComponent,
     FooterComponent,
     PageNotFoundComponent,
+    LoadingComponent
   ],
 })
 export class AppSharedModule {}
