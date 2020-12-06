@@ -97,3 +97,4 @@
 .addCourseWrapper button {
   width: 135px;
 }
+.loadMoreButton{cursor: pointer !important;}

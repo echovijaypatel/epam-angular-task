@@ -20,6 +20,13 @@ import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
 import { AuthInterceptor } from './services/auth-interceptor';
 import { LoadingInterceptor } from './app-shared/loading/loading.interceptor';
 
+import { StoreModule } from '@ngrx/store';
+import { courseReducer } from './state/course.reducer';
+import { authReducer } from './state/auth.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './state/auth.effects';
+import { LoadTokenService } from './services/load-token.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,9 +46,15 @@ import { LoadingInterceptor } from './app-shared/loading/loading.interceptor';
     AppSharedModule,
     NgMultiSelectDropDownModule.forRoot(),
     NgDynamicBreadcrumbModule,
+    EffectsModule.forRoot([AuthEffects]),
+    StoreModule.forRoot({
+      courses: courseReducer,
+      authState: authReducer,
+    }),
   ],
   providers: [
     NumberToMinutes,
+    LoadTokenService,
     AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,

@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { AppState } from 'src/app/app.state';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from '../models/course';
 
@@ -19,8 +21,15 @@ export class CourseListComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
   searchTextChanged = new Subject<string>();
   courses: Course[] = [];
+  coursesFromStore: Observable<Course[]>;
 
-  constructor(public router: Router, private courseService: CourseService) {}
+  constructor(
+    private store: Store<AppState>,
+    public router: Router,
+    private courseService: CourseService
+  ) {
+    this.coursesFromStore = store.select('courses');
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -29,16 +38,14 @@ export class CourseListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getCourses();
     this.subscription = this.searchTextChanged
-    .pipe(
-      debounceTime(1000)
-    )
-    .subscribe((data) => {
-      console.log('Search-' + data);
-      this.start = 0;
-      this.end = 1;
-      this.searchStr = data;
-      this.getCourses();
-    });
+      .pipe(debounceTime(1000))
+      .subscribe((data) => {
+        console.log('Search-' + data);
+        this.start = 0;
+        this.end = 1;
+        this.searchStr = data;
+        this.getCourses();
+      });
   }
 
   getCourses() {

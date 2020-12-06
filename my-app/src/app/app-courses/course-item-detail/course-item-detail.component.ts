@@ -1,13 +1,12 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Course } from '../models/course';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { CourseService } from 'src/app/services/course.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
 import { Author } from '../models/author';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.state';
 
 @Component({
   selector: 'app-course-item-detail',
@@ -22,6 +21,7 @@ export class CourseItemDetailComponent implements OnInit {
   errorMessage: string;
 
   constructor(
+    private store: Store<AppState>,
     public router: Router,
     public route: ActivatedRoute,
     private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,

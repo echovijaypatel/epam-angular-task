@@ -14,7 +14,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getUserInfo().subscribe(
       (result) => {
-        this.username = result.name.first + ' ' + result.name.last;
+        if (result && result.user && result.user.name)
+          this.username = result.user.name.first + ' ' + result.user.name.last;
       },
       (error) => {
         this.authService.logout();
