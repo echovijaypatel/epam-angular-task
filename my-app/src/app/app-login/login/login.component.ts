@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { tap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { map, take, tap } from 'rxjs/operators';
 import { AppState } from 'src/app/app.state';
 import { LoginRequest } from 'src/app/models/loginrequest';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,17 +18,25 @@ export class LoginComponent implements OnInit {
   password: string = 'id';
   errorMsg: string = '';
 
-  constructor(
-    private store: Store<AppState>,
-    private authService: AuthService,
-    public router: Router
-  ) {}
+  constructor(private store: Store<AppState>, public router: Router) {}
 
   ngOnInit(): void {
-    debugger;
-    this.authService.getUserInfo().subscribe((result) => {
-      if (result.isAuthenticated) this.router.navigateByUrl('/courses');
-    });
+    this.store
+      .pipe(select((x) => x.authState.isAuthenticated))
+      .pipe(take(1))
+      .subscribe((isAuthenticated) => {
+        if (isAuthenticated) this.router.navigateByUrl('/courses');
+      });
+
+    // this.store
+    //   .select((x) => x.authState)
+    //   .subscribe((data) => {
+    //     if (data.isAuthenticated) {
+    //       this.router.navigateByUrl('/courses');
+    //     }
+    //     debugger;
+    //     console.log(data);
+    //   });
   }
 
   onLogin() {

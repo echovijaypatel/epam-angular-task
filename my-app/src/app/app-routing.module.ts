@@ -10,7 +10,14 @@ import { LoadCoursesService } from './services/load-course.service';
 import { LoadTokenService } from './services/load-token.service';
 
 const routes: Routes = [
-  { path: 'login', canActivate: [LoadTokenService], component: LoginComponent },
+  {
+    path: 'login',
+    canActivate: [LoadTokenService],
+    component: LoginComponent,
+    data: {
+      isLogin: true,
+    },
+  },
   {
     path: 'courses',
     canActivate: [LoadTokenService, LoadCoursesService, AuthGuardService],
@@ -70,6 +77,9 @@ const routes: Routes = [
     canActivate: [LoadTokenService],
     component: LoginComponent,
     pathMatch: 'full',
+    data: {
+      isLogin: true,
+    },
   },
   {
     path: '**',

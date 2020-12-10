@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate } from '@angular/router';
+import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
@@ -14,8 +14,8 @@ export class LoadTokenService implements CanActivate {
     public authService: AuthService,
     public router: Router
   ) {}
-  canActivate(): Observable<boolean> {
-    debugger;
+
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     return this.authService.getUserInfoFromServer().pipe(
       map((userData) => {
         this.store.dispatch(
@@ -29,8 +29,12 @@ export class LoadTokenService implements CanActivate {
         return true;
       }),
       catchError((err) => {
-        console.log(err);
-        return of(true);
+        const isAllowed = route.data.isLogin || false;
+        console.log(isAllowed);
+        if (!isAllowed) {
+          this.router.navigateByUrl('/login');
+        }
+        return of(isAllowed);
       })
     );
   }

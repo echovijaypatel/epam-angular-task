@@ -6,6 +6,7 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { AppState } from '../app.state';
 import { AuthState } from '../state/auth.reducer';
 import { AuthService } from './auth.service';
+import * as AuthActions from '../state/auth.actions';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
