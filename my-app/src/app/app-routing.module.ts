@@ -6,13 +6,14 @@ import { CoursesComponent } from './app-courses/courses.component';
 import { LoginComponent } from './app-login/login/login.component';
 import { PageNotFoundComponent } from './app-shared/page-not-found/page-not-found.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { LoadCoursesService } from './services/load-course.service';
 import { LoadTokenService } from './services/load-token.service';
 
 const routes: Routes = [
   { path: 'login', canActivate: [LoadTokenService], component: LoginComponent },
   {
     path: 'courses',
-    canActivate: [LoadTokenService, AuthGuardService],
+    canActivate: [LoadTokenService, LoadCoursesService, AuthGuardService],
     component: CoursesComponent,
     data: {
       title: 'Courses',

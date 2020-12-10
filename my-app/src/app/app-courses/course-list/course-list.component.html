@@ -14,12 +14,12 @@
     </button>
   </div>
 </div>
-<div class="noDataMsg" *ngIf="courses.length < 1">
+<div class="noDataMsg" *ngIf="(courses | async).length < 1">
   No Data, Feel free to add some courses or change filter.
 </div>
-<div *ngIf="courses.length > 0">
+<div *ngIf="(courses | async).length > 0">
   <div
-    *ngFor="let item of courses"
+    *ngFor="let item of courses | async"
     class="row coursesOverview"
     courseListHighlight
     [creationDate]="item.date"
@@ -77,22 +77,8 @@
     </div>
   </div>
 
-  <div class="loadMore">
-    <a (click)="loadMore()" class="loadMoreButton"> Load More</a>
-  </div>
 </div>
-<!--
-<div>
-  Course from store
-  <div *ngFor="let item of this.coursesFromStore | async">
-    <div>{{ item.name }}</div>
-  </div>
-</div> -->
-<!--
-<app-course-item-detail
-  [courseDetail]="courseDetail"
-  [dropdownSettings]="dropdownSettings"
-  [authors]="authors"
-  (cancelSaveEditEvent)="cancelSaveEdit()"
-  (saveChangesEvent)="saveChanges($event)"
-></app-course-item-detail> -->
+
+<div class="loadMore">
+  <a (click)="loadMore()" class="loadMoreButton"> Load More</a>
+</div>

@@ -21,11 +21,13 @@ import { AuthInterceptor } from './services/auth-interceptor';
 import { LoadingInterceptor } from './app-shared/loading/loading.interceptor';
 
 import { StoreModule } from '@ngrx/store';
-import { courseReducer } from './state/course.reducer';
+import { courseReducer } from './app-courses/state/course.reducer';
 import { authReducer } from './state/auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './state/auth.effects';
 import { LoadTokenService } from './services/load-token.service';
+import { LoadCoursesService } from './services/load-course.service';
+import { CourseEffects } from './app-courses/state/course.effect';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,7 @@ import { LoadTokenService } from './services/load-token.service';
     AppSharedModule,
     NgMultiSelectDropDownModule.forRoot(),
     NgDynamicBreadcrumbModule,
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, CourseEffects]),
     StoreModule.forRoot({
       courses: courseReducer,
       authState: authReducer,
@@ -55,6 +57,7 @@ import { LoadTokenService } from './services/load-token.service';
   providers: [
     NumberToMinutes,
     LoadTokenService,
+    LoadCoursesService,
     AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,

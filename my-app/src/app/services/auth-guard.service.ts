@@ -6,7 +6,6 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { AppState } from '../app.state';
 import { AuthState } from '../state/auth.reducer';
 import { AuthService } from './auth.service';
-import * as AuthActions from '../state/auth.actions';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
@@ -16,13 +15,13 @@ export class AuthGuardService implements CanActivate {
     public router: Router
   ) {}
   canActivate(): Observable<boolean> {
-    return this.getFromStoreOrAPI().pipe(
+    return this.getFromStore().pipe(
       switchMap(() => of(true)),
       catchError(() => of(false))
     );
   }
 
-  getFromStoreOrAPI(): Observable<any> {
+  getFromStore(): Observable<any> {
     return this.store
       .select((x) => x.authState)
       .pipe(
@@ -30,7 +29,7 @@ export class AuthGuardService implements CanActivate {
           if (authState.isAuthenticated) {
             return true;
           } else {
-            this.store.dispatch(new AuthActions.Auth_GetAuthInfo());
+            return false;
           }
         })
       );

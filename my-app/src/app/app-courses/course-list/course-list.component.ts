@@ -5,7 +5,9 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { AppState } from 'src/app/app.state';
 import { CourseService } from 'src/app/services/course.service';
+import { LoadCourse, RemoveCourse } from 'src/app/app-courses/state/course.actions';
 import { Course } from '../models/course';
+import { CourseSearch } from '../models/courseSearch';
 
 @Component({
   selector: 'app-course-list',
@@ -20,13 +22,12 @@ export class CourseListComponent implements OnInit, OnDestroy {
   searchStr: string = '';
   subscription = new Subscription();
   searchTextChanged = new Subject<string>();
-  courses: Course[] = [];
+  courses: Observable<Course[]>;
   coursesFromStore: Observable<Course[]>;
 
   constructor(
     private store: Store<AppState>,
-    public router: Router,
-    private courseService: CourseService
+    public router: Router // private courseService: CourseService
   ) {
     this.coursesFromStore = store.select('courses');
   }
@@ -36,34 +37,31 @@ export class CourseListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getCourses();
+    this.courses = this.store.select((state) => state.courses);
     this.subscription = this.searchTextChanged
       .pipe(debounceTime(1000))
       .subscribe((data) => {
         console.log('Search-' + data);
-        this.start = 0;
-        this.end = 1;
         this.searchStr = data;
-        this.getCourses();
+        var search: CourseSearch = {
+          start: this.start,
+          maxcount: this.end,
+          sort: this.sortKey,
+          search: this.searchStr,
+        };
+        this.store.dispatch(new LoadCourse(search));
       });
-  }
-
-  getCourses() {
-    this.courseService
-      .getCourses(this.start, this.end, this.sortKey, this.searchStr)
-      .subscribe(
-        (data) => {
-          this.refreshList(data);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
   }
 
   loadMore() {
     this.end = this.end + this.batchSize;
-    this.getCourses();
+    var search: CourseSearch = {
+      start: this.start,
+      maxcount: this.end,
+      sort: this.sortKey,
+      search: this.searchStr,
+    };
+    this.store.dispatch(new LoadCourse(search));
   }
 
   addNewCourse() {
@@ -82,18 +80,7 @@ export class CourseListComponent implements OnInit, OnDestroy {
 
   deleteCourse(id) {
     if (confirm('Are you sure to delete?')) {
-      this.courseService.deleteCourse(id).subscribe(
-        (data) => {
-          this.getCourses();
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+      this.store.dispatch(new RemoveCourse(id));
     }
-  }
-
-  refreshList(data) {
-    this.courses = data;
   }
 }

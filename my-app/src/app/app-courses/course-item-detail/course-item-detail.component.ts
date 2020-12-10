@@ -7,6 +7,8 @@ import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
 import { Author } from '../models/author';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
+import * as selectors from '../state/course.selectors';
+import { AddCourse, UpdateCourse } from '../state/course.actions';
 
 @Component({
   selector: 'app-course-item-detail',
@@ -14,7 +16,7 @@ import { AppState } from 'src/app/app.state';
   styleUrls: ['./course-item-detail.component.css'],
 })
 export class CourseItemDetailComponent implements OnInit {
-  courseId: string;
+  courseId: number;
   courseDetail: Course;
   dropdownSettings: IDropdownSettings = {};
   allAuthors: Author[];
@@ -39,10 +41,9 @@ export class CourseItemDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.courseId = this.route.snapshot.paramMap.get('id');
+    this.courseId = parseInt(this.route.snapshot.paramMap.get('id'));
     this.courseService.getAllAuthors().subscribe(
       (data) => {
-        console.log(data);
         this.allAuthors = data;
         this.loadCourse();
       },
@@ -62,15 +63,20 @@ export class CourseItemDetailComponent implements OnInit {
 
   private loadCourse() {
     if (this.courseId) {
-      this.courseService.getCourse(this.courseId).subscribe(
-        (data) => {
-          this.courseDetail = data;
+      this.store
+        .select(selectors.getItemById(this.courseId))
+        .subscribe((item: Course) => {
+          this.courseDetail = {
+            id: item.id,
+            name: item.name,
+            description: item.description,
+            length: item.length,
+            isTopRated: item.isTopRated,
+            date: item.date,
+            authors: item.authors,
+          };
           this.setBreadcrumb(this.courseDetail.name);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+        });
     } else {
       this.courseDetail = {
         id: 0,
@@ -101,24 +107,19 @@ export class CourseItemDetailComponent implements OnInit {
   }
 
   onSave() {
+    var course: Course = {
+      id: this.courseDetail.id,
+      name: this.courseDetail.name,
+      date: this.courseDetail.date,
+      length: this.courseDetail.length,
+      description: this.courseDetail.description,
+      authors: this.courseDetail.authors,
+      isTopRated: this.courseDetail.isTopRated,
+    };
     if (this.courseDetail.id > 0) {
-      this.courseService.updateCourse(this.courseDetail).subscribe(
-        (data) => {
-          this.router.navigate(['/courses']);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+      this.store.dispatch(new UpdateCourse(course));
     } else {
-      this.courseService.addCourse(this.courseDetail).subscribe(
-        (data) => {
-          this.router.navigate(['/courses']);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+      this.store.dispatch(new AddCourse(this.courseDetail));
     }
   }
 
