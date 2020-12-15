@@ -46,3 +46,4 @@
 .disInlineTitle {width: 89px;}
 .disInline{display: inline;}
 .courseDuration{margin-left: 20px;}
+input.ng-invalid.ng-touched,textarea.ng-invalid.ng-touched{border: red 1px solid;}

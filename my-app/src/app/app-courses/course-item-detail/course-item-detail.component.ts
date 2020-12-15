@@ -107,10 +107,19 @@ export class CourseItemDetailComponent implements OnInit {
   }
 
   onSave() {
+    //Format dd/MM/yyyy
+    var dateParts = this.courseDetail.date.toString().split('/');
+    // month is 0-based, that's why we need dataParts[1] - 1
+    var dateObject = new Date(
+      parseInt(dateParts[2]),
+      parseInt(dateParts[1]) - 1,
+      parseInt(dateParts[0])
+    );
+
     var course: Course = {
       id: this.courseDetail.id,
       name: this.courseDetail.name,
-      date: this.courseDetail.date,
+      date: dateObject,
       length: this.courseDetail.length,
       description: this.courseDetail.description,
       authors: this.courseDetail.authors,
@@ -119,7 +128,7 @@ export class CourseItemDetailComponent implements OnInit {
     if (this.courseDetail.id > 0) {
       this.store.dispatch(new UpdateCourse(course));
     } else {
-      this.store.dispatch(new AddCourse(this.courseDetail));
+      this.store.dispatch(new AddCourse(course));
     }
   }
 

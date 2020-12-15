@@ -28,6 +28,9 @@ import { AuthEffects } from './state/auth.effects';
 import { LoadTokenService } from './services/load-token.service';
 import { LoadCoursesService } from './services/load-course.service';
 import { CourseEffects } from './app-courses/state/course.effect';
+import { DatePickerComponent } from './app-courses/custom-controls/date-picker/date-picker.component';
+import { AuthorPickerComponent } from './app-courses/custom-controls/author-picker/author-picker.component';
+import { CourseDurationComponent } from './app-courses/custom-controls/course-duration/course-duration.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { CourseEffects } from './app-courses/state/course.effect';
     CoursesComponent,
     CourseItemDetailComponent,
     CourseListHighlightDirective,
+    DatePickerComponent,
+    CourseDurationComponent,
+    AuthorPickerComponent,
   ],
   imports: [
     FormsModule,

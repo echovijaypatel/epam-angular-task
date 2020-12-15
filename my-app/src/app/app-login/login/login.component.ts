@@ -27,33 +27,9 @@ export class LoginComponent implements OnInit {
       .subscribe((isAuthenticated) => {
         if (isAuthenticated) this.router.navigateByUrl('/courses');
       });
-
-    // this.store
-    //   .select((x) => x.authState)
-    //   .subscribe((data) => {
-    //     if (data.isAuthenticated) {
-    //       this.router.navigateByUrl('/courses');
-    //     }
-    //     debugger;
-    //     console.log(data);
-    //   });
   }
 
   onLogin() {
-    //   this.authService
-    //     .login({
-    //       login: this.username,
-    //       password: this.password,
-    //     })
-    //     .subscribe(
-    //       (result) => {
-    //         this.authService.processLoginSuccess(result);
-    //       },
-    //       (error) => {
-    //         this.errorMsg = error.error;
-    //       }
-    //     );
-
     const loginRequest: LoginRequest = {
       login: this.username,
       password: this.password,

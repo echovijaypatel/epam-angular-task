@@ -28,20 +28,14 @@ export function authReducer(
 ) {
   switch (action.type) {
     case AuthActions.AUTH_LOGIN_SUCCESS:
-      console.log('AUTH_LOGIN_SUCCESS');
-      console.log(action.payload);
       state = action.payload;
       return state;
 
     case AuthActions.SET_AUTH_INFO:
-      console.log('SET_AUTH_INFO');
-      console.log(action.payload);
       state = action.payload;
       return state;
 
     case AuthActions.AUTH_LOGIN_FAIL:
-      console.log('AUTH_LOGIN_FAIL');
-      console.log(action.payload);
       state = initialState;
       return state;
 

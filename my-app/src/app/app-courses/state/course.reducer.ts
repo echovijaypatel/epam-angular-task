@@ -12,9 +12,6 @@ export function courseReducer(
       state = action.payload;
       return [...state];
 
-    // case CourseActions.ADD_COURSE_COMPLETE:
-    //   return [...state, action.payload];
-
     case CourseActions.UPDATE_COURSE:
       var records = state.filter((el) => el.id != action.payload.id);
       var newState = [...records, action.payload];

@@ -15,6 +15,7 @@
           placeholder="Enter Title"
           [(ngModel)]="courseDetail.name"
           name="courseDetail.Title"
+          maxlength="50"
           required
         />
       </div>
@@ -29,6 +30,7 @@
           placeholder="Add description"
           [(ngModel)]="courseDetail.description"
           name="courseDetail.Description"
+          maxlength="500"
           required
         ></textarea>
       </div>
@@ -37,7 +39,7 @@
         <div class="errorItem disInline">*Required</div>
       </div>
       <div class="itemSection">
-        <input
+        <!-- <input
           class="inputItem normalWidth duration"
           type="number"
           placeholder="Minutes"
@@ -45,7 +47,11 @@
           name="courseDetail.Duration"
           required
           min="10"
-        />
+        /> -->
+        <app-course-duration
+          name="courseDetail.length"
+          [(ngModel)]="courseDetail.length"
+        ></app-course-duration>
         <span class="courseDuration">{{
           courseDetail.length | NumberToMinutes
         }}</span>
@@ -55,15 +61,10 @@
         <div class="errorItem disInline">*Required</div>
       </div>
       <div class="itemSection">
-        <input
-          class="inputItem normalWidth creationDate"
-          type="date"
-          placeholder="Date"
-          [ngModel]="courseDetail.date | date:'yyyy-MM-dd'"
-          (ngModelChange)="courseDetail.date = $event"
-          name="courseDetail.CreationDate"
-          required
-        />
+        <app-date-picker
+          name="courseDetail.date"
+          [(ngModel)]="courseDetail.date"
+        ></app-date-picker>
       </div>
       <div class="itemSectionTitle">
         <div class="item">Authors:</div>
