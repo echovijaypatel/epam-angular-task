@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoadingComponent } from './loading/loading.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -14,15 +15,19 @@ import { LoadingComponent } from './loading/loading.component';
     HeaderComponent,
     FooterComponent,
     PageNotFoundComponent,
-    LoadingComponent
+    LoadingComponent,
   ],
-  imports: [BrowserModule, NgxBootstrapIconsModule.pick(allIcons)],
+  imports: [
+    BrowserModule,
+    TranslateModule,
+    NgxBootstrapIconsModule.pick(allIcons),
+  ],
   exports: [
     LogoComponent,
     HeaderComponent,
     FooterComponent,
     PageNotFoundComponent,
-    LoadingComponent
+    LoadingComponent,
   ],
 })
 export class AppSharedModule {}

@@ -1,7 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
@@ -20,10 +24,8 @@ import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
 import { AuthInterceptor } from './services/auth-interceptor';
 import { LoadingInterceptor } from './app-shared/loading/loading.interceptor';
 
-import { StoreModule } from '@ngrx/store';
 import { courseReducer } from './app-courses/state/course.reducer';
 import { authReducer } from './state/auth.reducer';
-import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './state/auth.effects';
 import { LoadTokenService } from './services/load-token.service';
 import { LoadCoursesService } from './services/load-course.service';
@@ -31,6 +33,14 @@ import { CourseEffects } from './app-courses/state/course.effect';
 import { DatePickerComponent } from './app-courses/custom-controls/date-picker/date-picker.component';
 import { AuthorPickerComponent } from './app-courses/custom-controls/author-picker/author-picker.component';
 import { CourseDurationComponent } from './app-courses/custom-controls/course-duration/course-duration.component';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -54,6 +64,14 @@ import { CourseDurationComponent } from './app-courses/custom-controls/course-du
     AppSharedModule,
     NgMultiSelectDropDownModule.forRoot(),
     NgDynamicBreadcrumbModule,
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
     EffectsModule.forRoot([AuthEffects, CourseEffects]),
     StoreModule.forRoot({
       courses: courseReducer,
