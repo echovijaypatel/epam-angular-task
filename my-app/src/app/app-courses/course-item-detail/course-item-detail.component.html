@@ -71,7 +71,7 @@
         <div class="errorItem floatRight">*Required</div>
       </div>
       <div class="itemSection">
-        <ng-multiselect-dropdown
+        <!-- <ng-multiselect-dropdown
           [settings]="dropdownSettings"
           [data]="allAuthors"
           [(ngModel)]="courseDetail.authors"
@@ -80,7 +80,14 @@
           name="courseDetail.SelectedAuthors"
           required
         >
-        </ng-multiselect-dropdown>
+        </ng-multiselect-dropdown> -->
+        <app-author-picker
+          name="courseDetail.authors"
+          [selectedAuthors]="courseDetail.authors"
+          [allAuthors]="allAuthors"
+          [(ngModel)]="courseDetail.authors"
+        >
+        </app-author-picker>
       </div>
       <div class="itemSection buttonWrapper">
         <div class="floatRight">

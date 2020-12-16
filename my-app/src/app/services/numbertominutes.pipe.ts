@@ -3,7 +3,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'NumberToMinutes' })
 export class NumberToMinutes implements PipeTransform {
   transform(value: number): string {
-    debugger;
     if (!value || isNaN(+value))
       //ensure value is not whitespace string or fail it
       return '';

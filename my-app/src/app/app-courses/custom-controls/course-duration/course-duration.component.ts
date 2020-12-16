@@ -37,12 +37,10 @@ export class CourseDurationComponent
   }
 
   valuechange(data) {
-    console.log(this.currentValue);
     this.emitChanges();
   }
 
   validate(control: AbstractControl): { [key: string]: any } | null {
-    console.log('asd');
     if (this.isNumeric(control.value)) {
       this.isValid = false;
       return { 'courseDetail.length': true }; // return object if the validation is not passed.
@@ -60,19 +58,15 @@ export class CourseDurationComponent
       this.currentValue = obj;
       this.emitChanges();
     }
-    console.log('writeValue implemented.');
   }
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
-    console.log('onChange implemented.');
   }
 
   registerOnTouched(fn: any): void {
-    console.log('registerOnTouched implemented.');
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    console.log('setDisabledState implemented.');
   }
 }

@@ -1,11 +1,12 @@
 <div class="row">
   <div class="col-md-4 searchWrapper">
-    <input
-      type="text"
-      placeholder="Text to search"
-      (keyup)="searchCourse($event)"
-    />
-    <!-- <button class="btn btn-success" >Search</button> -->
+    <form #coursesForm="ngForm">
+      <input
+        type="text"
+        placeholder="Text to search"
+        (keyup)="searchCourse($event)"
+      />
+    </form>
   </div>
   <div class="col-md-8 addCourseWrapper">
     <button class="btn btn-primary addCourse" (click)="addNewCourse()">
@@ -76,7 +77,6 @@
       </div>
     </div>
   </div>
-
 </div>
 
 <div class="loadMore">

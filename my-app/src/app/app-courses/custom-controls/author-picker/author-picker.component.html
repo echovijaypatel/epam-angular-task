@@ -1,1 +1,58 @@
-<p>author-picker works!</p>
+<div class="authorContainer">
+  <div
+    (click)="showHideSearch()"
+    class="selectedAuthors"
+    [ngClass]="{ customControlInvalid: selectedAuthorsCount < 1 }"
+  >
+    <span class="select-item" *ngIf="selectedAuthorsCount < 1">Select</span>
+    <span *ngFor="let item of internalAuthors">
+      <span class="author-item" *ngIf="item.selected">
+        {{ item.name }}
+        <a
+          (click)="
+            markSelectUnselect($event, item.id, item.name, item.selected)
+          "
+          >x</a
+        >
+      </span>
+    </span>
+  </div>
+  <div class="allAuthorsWrapper" *ngIf="isSearchVisible">
+    <div class="allAuthors">
+      <input
+        class="searchAuthor"
+        type="text"
+        placeholder="Search"
+        (input)="searchIn($event.target.value)"
+      />
+    </div>
+    <div class="allAuthorList">
+      <div class="allAuthorItem" *ngFor="let item of internalAuthors">
+        <div
+          class="autherItemSel"
+          *ngIf="item.isMatched == null || item.isMatched == true"
+          (click)="
+            markSelectUnselect($event, item.id, item.name, item.selected)
+          "
+        >
+          <input
+            type="checkbox"
+            class="authorItemCheckbox"
+            [checked]="item.selected"
+          />
+          <span class="authorItemTxt">
+            {{ item.name }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div>
+  <div class="allAuthorItem" *ngFor="let item of selectedAuthors">
+    {{ item.name }}
+  </div>
+  <div class="allAuthorItem" *ngFor="let item of allAuthors">
+    {{ item.name }}
+  </div>
+</div> -->

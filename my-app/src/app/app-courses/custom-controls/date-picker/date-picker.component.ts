@@ -36,7 +36,6 @@ export class DatePickerComponent implements ControlValueAccessor, Validator {
   }
 
   valuechange(data) {
-    console.log(this.currentValue);
     this.emitChanges();
   }
 
@@ -57,20 +56,16 @@ export class DatePickerComponent implements ControlValueAccessor, Validator {
       this.currentValue = this.formatDateToString(obj);
       this.emitChanges();
     }
-    console.log('writeValue implemented.');
   }
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
-    console.log('onChange implemented.');
   }
 
   registerOnTouched(fn: any): void {
-    console.log('registerOnTouched implemented.');
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    console.log('setDisabledState implemented.');
   }
 
   withoutTime(date) {
