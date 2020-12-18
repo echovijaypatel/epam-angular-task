@@ -3,47 +3,32 @@ import { Author } from '../app-courses/models/author';
 import { HttpClient } from '@angular/common/http';
 import { Course } from '../app-courses/models/course';
 import { Config } from 'src/environments/config';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { LoadingService } from '../app-shared/loading/loading.service';
+import { CourseSearch } from '../app-courses/models/courseSearch';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
   private config = new Config();
-  private courses: Course[];
-  // private selectedAuthors: Author[];
 
-  constructor(private http: HttpClient) {
-    // this.selectedAuthors = [{ id: 3, name: 'Brad' }];
-  }
+  constructor(private http: HttpClient) {}
 
   getAllAuthors(): Observable<Author[]> {
     return this.http.get<Author[]>(this.config.apiUrl + '/authors');
   }
 
-  getCourses(
-    start: number,
-    count: number,
-    sort: string,
-    search: string
-  ): Observable<Course[]> {
+  getCourses(courseSearch: CourseSearch): Observable<Course[]> {
     return this.http.get<Course[]>(
       this.config.apiUrl +
         '/courses?start=' +
-        start +
+        courseSearch.start +
         '&count=' +
-        count +
+        courseSearch.maxcount +
         '&sort=' +
-        sort +
+        courseSearch.sort +
         '&textFragment=' +
-        search
+        courseSearch.search
     );
-  }
-
-  getCourse(id): Observable<Course> {
-    return this.http.get<Course>(this.config.apiUrl + '/courses/' + id);
-  }
-
-  addCourse(course: Course): Observable<Course> {
-    return this.http.post<Course>(this.config.apiUrl + '/courses', course);
   }
 
   updateCourse(course: Course): Observable<Course> {
@@ -53,20 +38,11 @@ export class CourseService {
     );
   }
 
-  deleteCourse(id): Observable<object> {
-    return this.http.delete(
-      this.config.apiUrl + '/courses/' + id,
-    );
+  removeCourse(id): Observable<object> {
+    return this.http.delete(this.config.apiUrl + '/courses/' + id);
   }
 
-  private getNextId(): number {
-    return (
-      Math.max.apply(
-        Math,
-        this.courses.map(function (o) {
-          return o.id;
-        })
-      ) + 1
-    );
+  addCourse(course: Course): Observable<Course> {
+    return this.http.post<Course>(this.config.apiUrl + '/courses', course);
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,10 +10,30 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
   username: string;
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
-    this.username = this.authService.getUserInfo();
+    this.authService.getUserInfo().subscribe(
+      (result) => {
+        if (result && result.user && result.user.name)
+          this.username = result.user.name.first + ' ' + result.user.name.last;
+      },
+      (error) => {
+        this.authService.logout();
+      }
+    );
+  }
+
+  changeLanguage(value) {
+    if (value == 'English') {
+      this.translate.use('en');
+    } else {
+      this.translate.use('fr');
+    }
   }
 
   onLogout() {

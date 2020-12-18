@@ -1,15 +1,14 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Course } from '../models/course';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { CourseService } from 'src/app/services/course.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
 import { Author } from '../models/author';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.state';
+import * as selectors from '../state/course.selectors';
+import { AddCourse, UpdateCourse } from '../state/course.actions';
 
 @Component({
   selector: 'app-course-item-detail',
@@ -17,12 +16,14 @@ import { Author } from '../models/author';
   styleUrls: ['./course-item-detail.component.css'],
 })
 export class CourseItemDetailComponent implements OnInit {
+  courseId: number;
   courseDetail: Course;
   dropdownSettings: IDropdownSettings = {};
   allAuthors: Author[];
   errorMessage: string;
 
   constructor(
+    private store: Store<AppState>,
     public router: Router,
     public route: ActivatedRoute,
     private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
@@ -40,14 +41,11 @@ export class CourseItemDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.setBreadcrumb('');
-
-    let courseId = this.route.snapshot.paramMap.get('id');
-
+    this.courseId = parseInt(this.route.snapshot.paramMap.get('id'));
     this.courseService.getAllAuthors().subscribe(
       (data) => {
         this.allAuthors = data;
-        this.loadCourse(courseId);
+        this.loadCourse();
       },
       (err) => {
         console.log(err);
@@ -55,7 +53,7 @@ export class CourseItemDetailComponent implements OnInit {
     );
   }
 
-  private setBreadcrumb(title:string) {
+  private setBreadcrumb(title: string) {
     const breadcrumb = {
       customText: '',
       dynamicText: title,
@@ -63,17 +61,22 @@ export class CourseItemDetailComponent implements OnInit {
     this.ngDynamicBreadcrumbService.updateBreadcrumbLabels(breadcrumb);
   }
 
-  private loadCourse(courseId: string) {
-    if (courseId) {
-      this.courseService.getCourse(courseId).subscribe(
-        (data) => {
-          this.courseDetail = data;
+  private loadCourse() {
+    if (this.courseId) {
+      this.store
+        .select(selectors.getItemById(this.courseId))
+        .subscribe((item: Course) => {
+          this.courseDetail = {
+            id: item.id,
+            name: item.name,
+            description: item.description,
+            length: item.length,
+            isTopRated: item.isTopRated,
+            date: item.date,
+            authors: item.authors,
+          };
           this.setBreadcrumb(this.courseDetail.name);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+        });
     } else {
       this.courseDetail = {
         id: 0,
@@ -82,7 +85,7 @@ export class CourseItemDetailComponent implements OnInit {
         length: 10,
         isTopRated: false,
         date: new Date(),
-        authors: []
+        authors: [],
       };
     }
   }
@@ -104,24 +107,28 @@ export class CourseItemDetailComponent implements OnInit {
   }
 
   onSave() {
+    //Format dd/MM/yyyy
+    var dateParts = this.courseDetail.date.toString().split('/');
+    // month is 0-based, that's why we need dataParts[1] - 1
+    var dateObject = new Date(
+      parseInt(dateParts[2]),
+      parseInt(dateParts[1]) - 1,
+      parseInt(dateParts[0])
+    );
+
+    var course: Course = {
+      id: this.courseDetail.id,
+      name: this.courseDetail.name,
+      date: dateObject,
+      length: this.courseDetail.length,
+      description: this.courseDetail.description,
+      authors: this.courseDetail.authors,
+      isTopRated: this.courseDetail.isTopRated,
+    };
     if (this.courseDetail.id > 0) {
-      this.courseService.updateCourse(this.courseDetail).subscribe(
-        (data) => {
-          this.router.navigate(['/courses']);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+      this.store.dispatch(new UpdateCourse(course));
     } else {
-      this.courseService.addCourse(this.courseDetail).subscribe(
-        (data) => {
-          this.router.navigate(['/courses']);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+      this.store.dispatch(new AddCourse(course));
     }
   }
 

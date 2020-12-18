@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -5,27 +6,41 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CourseService } from 'src/app/services/course.service';
 import { NumberToMinutes } from 'src/app/services/numbertominutes.pipe';
 import { UnitTestHelper } from 'src/app/services/unit.test.helper';
-
+import { Location } from '@angular/common';
 import { CourseItemDetailComponent } from './course-item-detail.component';
 
 describe('CourseItemDetailComponent', () => {
   let component: CourseItemDetailComponent;
   let fixture: ComponentFixture<CourseItemDetailComponent>;
   let courseService: CourseService;
+  let location: Location;
   let router: Router;
-  let route: ActivatedRoute;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      declarations: [CourseItemDetailComponent, NumberToMinutes],
       imports: [
-        RouterTestingModule.withRoutes(
-          new UnitTestHelper().injectTestingRoute()
-        ),
+        RouterTestingModule.withRoutes(UnitTestHelper.injectTestingRoute()),
         FormsModule,
         ReactiveFormsModule,
+        HttpClientModule,
       ],
-      providers: [CourseService, NumberToMinutes],
-      declarations: [CourseItemDetailComponent, NumberToMinutes],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: {
+                get(): string {
+                  return UnitTestHelper.testRouteValue;
+                },
+              },
+            },
+          },
+        },
+        CourseService,
+        NumberToMinutes,
+      ],
     }).compileComponents();
   });
 
@@ -34,11 +49,30 @@ describe('CourseItemDetailComponent', () => {
     component = fixture.componentInstance;
     courseService = TestBed.inject(CourseService);
     router = TestBed.inject(Router);
-    route = TestBed.inject(ActivatedRoute);
+    location = TestBed.inject(Location);
+    router.initialNavigation();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should load authors', () => {
+    component.ngOnInit();
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.allAuthors).toBeDefined();
+    });
+  });
+
+  it('should load course', () => {
+    UnitTestHelper.testRouteValue = '8693';
+    component.ngOnInit();
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.allAuthors).toBeDefined();
+    });
   });
 
   it('should do nothing', () => {
@@ -50,45 +84,43 @@ describe('CourseItemDetailComponent', () => {
     expect(true).toBeTrue();
   });
 
-  it('should emit on onCancel', () => {
-    component.courseDetail = courseService.getCourse(1);
+  it('should emit onCancel', () => {
     component.onCancel();
-    expect(true).toBeTrue();
-  });
-
-  it('should load course on init', () => {
-    const spyRoute = spyOn(route.snapshot.paramMap, 'get');
-    spyRoute.and.returnValue('1');
-    component = fixture.componentInstance;
-    component.ngOnInit();
-    fixture.detectChanges();
-    expect(component.courseDetail.Id).toBe(1);
+    fixture.whenStable().then(() => {
+      expect(location.path()).toBe('/courses');
+    });
   });
 
   it('should update course', () => {
-    component.courseDetail = courseService.getCourse(1);
-    component.courseDetail.Title = 'New';
-    component.onSave();
-    let newCourse = courseService.getCourse(1);
-    expect(newCourse.Title).toBe(component.courseDetail.Title);
+    courseService.getCourse(8693).subscribe(
+      (data) => {
+        component.courseDetail = data;
+        component.courseDetail.name = 'New';
+        component.onSave();
+        fixture.whenStable().then(() => {
+          expect(location.path()).toBe('/courses');
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   });
 
   it('should create course', () => {
-    component.courseDetail = courseService.getCourse(1);
-    component.courseDetail.Id = 0;
-    let oldCount = courseService.getCourses().length;
-    component.onSave();
-    let newCount = courseService.getCourses().length;
-    expect(oldCount + 1).toEqual(newCount);
+    courseService.getCourse(8693).subscribe(
+      (data) => {
+        data.id = 0;
+        component.courseDetail = data;
+        component.courseDetail.name = 'New';
+        component.onSave();
+        fixture.whenStable().then(() => {
+          expect(location.path()).toBe('/courses');
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   });
-
-  // it('should emit on onSave', () => {
-  //   component.courseDetail = courseService.getCourse(1);
-  //   spyOn(component.saveChangesEvent, 'emit');
-  //   component.onSave();
-  //   fixture.detectChanges();
-  //   fixture.whenStable().then(() => {
-  //     expect(component.saveChangesEvent.emit).toHaveBeenCalled();
-  //   });
-  // });
 });

@@ -4,8 +4,10 @@ import { CoursesComponent } from '../app-courses/courses.component';
 import { LoginComponent } from '../app-login/login/login.component';
 import { PageNotFoundComponent } from '../app-shared/page-not-found/page-not-found.component';
 
-export class UnitTestHelper{
-  public injectTestingRoute() {
+export abstract class UnitTestHelper {
+  public static testRouteValue = '1';
+
+  public static injectTestingRoute() {
     return [
       { path: 'login', component: LoginComponent },
       {
@@ -63,7 +65,6 @@ export class UnitTestHelper{
       },
       { path: '', component: LoginComponent },
       { path: '**', component: PageNotFoundComponent },
-    ]
+    ];
   }
 }
-

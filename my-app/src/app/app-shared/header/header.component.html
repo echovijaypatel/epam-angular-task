@@ -1,9 +1,26 @@
 <nav class="navbar">
   <app-logo></app-logo>
   <div class="userDetails" *ngIf="username">
-    <div><i-bs name="person-fill"></i-bs> <span class="username">{{ username }}</span></div>
+    <div>
+      <span>
+        {{ 'title' | translate }}
+      </span>
+      <select
+        class="languageSelector"
+        (change)="changeLanguage($event.target.value)"
+      >
+        <option>English</option>
+        <option>French</option>
+      </select>
+    </div>
+    <div>
+      <i-bs name="person-fill"></i-bs>
+      <span class="username">{{ username }}</span>
+    </div>
     <div class="logout">
-      <span class="logoutbtn" (click)="onLogout()"><i-bs name="box-arrow-left"></i-bs> Logout</span>
+      <span class="logoutbtn" (click)="onLogout()"
+        ><i-bs name="box-arrow-left"></i-bs> Logout</span
+      >
     </div>
   </div>
 </nav>

@@ -1,7 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
@@ -15,11 +19,28 @@ import { AppLoginModule } from './app-login/app-login.module';
 import { CourseListComponent } from './app-courses/course-list/course-list.component';
 import { CoursesComponent } from './app-courses/courses.component';
 import { CourseItemDetailComponent } from './app-courses/course-item-detail/course-item-detail.component';
-import { CourseListFilter } from './app-courses/course-list/course-list.filter.pipe';
 import { CourseListHighlightDirective } from './app-courses/course-list/course-list.directive';
-import { CourseListOrder } from './app-courses/course-list/course-list.order.pipe';
 import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
 import { AuthInterceptor } from './services/auth-interceptor';
+import { LoadingInterceptor } from './app-shared/loading/loading.interceptor';
+
+import { courseReducer } from './app-courses/state/course.reducer';
+import { authReducer } from './state/auth.reducer';
+import { AuthEffects } from './state/auth.effects';
+import { LoadTokenService } from './services/load-token.service';
+import { LoadCoursesService } from './services/load-course.service';
+import { CourseEffects } from './app-courses/state/course.effect';
+import { DatePickerComponent } from './app-courses/custom-controls/date-picker/date-picker.component';
+import { AuthorPickerComponent } from './app-courses/custom-controls/author-picker/author-picker.component';
+import { CourseDurationComponent } from './app-courses/custom-controls/course-duration/course-duration.component';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -29,8 +50,9 @@ import { AuthInterceptor } from './services/auth-interceptor';
     CoursesComponent,
     CourseItemDetailComponent,
     CourseListHighlightDirective,
-    CourseListFilter,
-    CourseListOrder,
+    DatePickerComponent,
+    CourseDurationComponent,
+    AuthorPickerComponent,
   ],
   imports: [
     FormsModule,
@@ -42,13 +64,33 @@ import { AuthInterceptor } from './services/auth-interceptor';
     AppSharedModule,
     NgMultiSelectDropDownModule.forRoot(),
     NgDynamicBreadcrumbModule,
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
+    EffectsModule.forRoot([AuthEffects, CourseEffects]),
+    StoreModule.forRoot({
+      courses: courseReducer,
+      authState: authReducer,
+    }),
   ],
   providers: [
     NumberToMinutes,
+    LoadTokenService,
+    LoadCoursesService,
     AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
       multi: true,
     },
   ],

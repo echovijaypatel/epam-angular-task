@@ -1,0 +1,7 @@
+<input
+  [ngClass]="{ 'customControlInvalid': !isValid }"
+  type="text"
+  [(ngModel)]="currentValue"
+  (input)="valuechange($event)"
+  placeholder="dd/mm/yyyy"
+/>

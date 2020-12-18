@@ -6,12 +6,21 @@ import { CoursesComponent } from './app-courses/courses.component';
 import { LoginComponent } from './app-login/login/login.component';
 import { PageNotFoundComponent } from './app-shared/page-not-found/page-not-found.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { LoadCoursesService } from './services/load-course.service';
+import { LoadTokenService } from './services/load-token.service';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'login',
+    canActivate: [LoadTokenService],
+    component: LoginComponent,
+    data: {
+      isLogin: true,
+    },
+  },
   {
     path: 'courses',
-    canActivate: [AuthGuardService],
+    canActivate: [LoadTokenService, LoadCoursesService, AuthGuardService],
     component: CoursesComponent,
     data: {
       title: 'Courses',
@@ -63,8 +72,20 @@ const routes: Routes = [
       },
     ],
   },
-  { path: '', component: LoginComponent },
-  { path: '**', component: PageNotFoundComponent },
+  {
+    path: '',
+    canActivate: [LoadTokenService],
+    component: LoginComponent,
+    pathMatch: 'full',
+    data: {
+      isLogin: true,
+    },
+  },
+  {
+    path: '**',
+    canActivate: [LoadTokenService],
+    component: PageNotFoundComponent,
+  },
 ];
 
 @NgModule({

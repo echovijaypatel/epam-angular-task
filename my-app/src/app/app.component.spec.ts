@@ -8,7 +8,7 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes(
-          new UnitTestHelper().injectTestingRoute()
+          UnitTestHelper.injectTestingRoute()
         ),
       ],
       declarations: [
